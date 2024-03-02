@@ -15,6 +15,7 @@ function index() {
           <div>
             <p className="text1">$NONO</p>
             <p className="text1">no Ponzi, no finance！</p>
+            <p className="text1">no Sell no Dump!</p>
           </div>
           <p className="text2">
             A social experiment of absolute fairness, without dumping, filled
@@ -51,26 +52,20 @@ function index() {
       </div>
       <div className="introduce-3">
         <div className="introduce-3-left">
-          {/* <div>
+          <div>
             <img className="nono-img" src={nono} alt="" />
-          </div> */}
+          </div>
           <div className="info">
             <div>
               <span>Token total supply: </span>
-              <span className="stroke">21,000</span>
+              <span>21,000</span>
             </div>
             <div>
               <span>Liquidity: </span>
-              <span className="stroke">100%</span>
+              <span>100%</span>
             </div>
             <div>
-              <span
-                style={{
-                  color: "rgb(198, 9, 41)",
-                }}
-              >
-                Tax:{" "}
-              </span>
+              <span>Tax: </span>
               <span
                 style={{
                   fontSize: "18PX",
@@ -121,7 +116,11 @@ function index() {
             The more you understand about $NONO, the more you will appreciate
             its uniqueness. It's perfect, just like a piece of art.
           </p>
-          <p>
+          <p
+            style={{
+              fontSize: "16px",
+            }}
+          >
             This is a social experiment, so there is no detailed roadmap. All
             outcomes are driven by the participants in the experiment
           </p>

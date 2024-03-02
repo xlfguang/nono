@@ -175,13 +175,13 @@
   border-radius: 30px;
   background: #16191b;
   margin-top: 30px;
-  padding: 6.04vw 7.23vw 5.52vw 12.09vw;
+  padding: 6.04vw 7.23vw 5.52vw 2.09vw;
   display: flex;
   justify-content: space-between;
 }
 
 .aboutUs .introduce-3 .introduce-3-right {
-  width: 59.68%;
+  width: 50.68%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -220,10 +220,11 @@
   font-weight: 400;
   line-height: 140%;
   font-size: calc(1.3vw);
+  text-align: left;
 }
 
 .aboutUs .introduce-3 .introduce-3-left {
-  width: 34%;
+  width: 45%;
   padding: 20px 0;
   display: flex;
   align-items: center;
@@ -328,7 +329,8 @@
   /* margin-top: 30px; */
   margin: 30px auto 0;
   a {
-    color: rgb(198, 9, 41);
+    color: #fff;
+
     /* 去掉下滑 */
     text-decoration: none;
   }
@@ -352,12 +354,12 @@
 .aboutUs .web-info .web-info-right .line {
   width: 1px;
   height: 13px;
-  background: rgb(198, 9, 41);
+  background: #fff;
   margin: 0 10px;
 }
 
 .aboutUs .web-info .web-info-right .web-info-right-item span {
-  color: rgb(198, 9, 41);
+  color: #fff;
   font-family: Inter;
   font-size: 13px;
   font-style: normal;
