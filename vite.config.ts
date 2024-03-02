@@ -12,6 +12,7 @@ export default defineConfig({
   define: {
     global: {},
   },
+  base: "/nono/",
   // build: {
   //   rollupOptions: {
   //     external: [
