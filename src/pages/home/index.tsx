@@ -5,7 +5,9 @@ function index() {
   return (
     <div className="aboutUs">
       <div className="title">
-        <div className="circle"></div>
+        <div className="circle">
+          <img src={nono} alt="" />
+        </div>
         <h2 className="title-text">NONO</h2>
       </div>
       <div className="introduce-1">
@@ -49,15 +51,35 @@ function index() {
       </div>
       <div className="introduce-3">
         <div className="introduce-3-left">
-          <div>
+          {/* <div>
             <img className="nono-img" src={nono} alt="" />
-          </div>
-          {/* <div className="prohibit"></div>
-          <div className="NONO">
-            <div>
-              <img className="nono-img" src={nono} alt="" />
-            </div>
           </div> */}
+          <div className="info">
+            <div>
+              <span>Token total supply: </span>
+              <span className="stroke">21,000</span>
+            </div>
+            <div>
+              <span>Liquidity: </span>
+              <span className="stroke">100%</span>
+            </div>
+            <div>
+              <span
+                style={{
+                  color: "rgb(198, 9, 41)",
+                }}
+              >
+                Tax:{" "}
+              </span>
+              <span
+                style={{
+                  fontSize: "18PX",
+                }}
+              >
+                10% (7.5% pool, 2.5% marketing)
+              </span>
+            </div>
+          </div>
         </div>
         <div className="introduce-3-right">
           <div className="introduce-3-right-title">
@@ -83,7 +105,6 @@ function index() {
         </div>
       </div>
       <div className="get-in-touch">
-        <div className="title">Get in touch?</div>
         <div className="content">
           <p>
             Firstly, $NONO will launch under absolute fairness, offering
@@ -100,24 +121,30 @@ function index() {
             The more you understand about $NONO, the more you will appreciate
             its uniqueness. It's perfect, just like a piece of art.
           </p>
+          <p>
+            This is a social experiment, so there is no detailed roadmap. All
+            outcomes are driven by the participants in the experiment
+          </p>
         </div>
-        <div className="touch-btn">Contact us</div>
       </div>
 
       <div className="web-info">
-        <div className="time">© 2024 Feeder. All rights reserved.</div>
+        <div className="time">@2024 NONO Finance </div>
         <div className="web-info-right">
           <div className="web-info-right-item">
-            <span>Disclaimers</span>
+            <span>
+              <a href="https://twitter.com/NONOCoins" target="_blank">
+                Twitter
+              </a>
+            </span>
           </div>
           <div className="line"></div>
           <div className="web-info-right-item">
-            <span>Terms</span>
-          </div>
-          <div className="line"></div>
-
-          <div className="web-info-right-item">
-            <span>Privacy</span>
+            <span>
+              <a href="" target="_blank">
+                Telegram
+              </a>
+            </span>
           </div>
         </div>
       </div>
