@@ -1,13 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ArrowImg from "@/assets/img/icons8.png";
-import nono from "@/assets/img/no-no.webp";
 
 // Styled components
 const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
-  align-items: baseline;
+  align-items: center;
   padding: 20px;
   height: calc(100vh - 125px);
   .nono {
@@ -30,12 +29,6 @@ const LeftPanel = styled.div`
     width: 100%;
   }
 `;
-const Title = styled.h2`
-  color: #fff;
-  font-size: 24px;
-  margin-bottom: 20px;
-  width: 100%;
-`;
 
 const RightPanel = styled.div`
   width: 45%;
@@ -49,10 +42,11 @@ const RightPanel = styled.div`
 const DashboardBox = styled.div`
   width: 100%;
   max-width: 600px;
-  height: 680px;
+  height: 540px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 `;
 const Prize = styled.div`
   display: flex;
@@ -60,6 +54,7 @@ const Prize = styled.div`
   align-items: center;
   width: 100%;
   font-size: 24px;
+  height: 48px;
   .ETH {
     border-radius: 5px;
     border: 2px solid #c60929;
@@ -76,7 +71,6 @@ const RedText = styled.span`
 `;
 const Column = styled.div`
   width: 100%;
-  margin-bottom: 20px;
   color: #fff;
 `;
 const InputBox = styled.div`
@@ -189,14 +183,32 @@ const BonusAmount = styled.span`
   color: #fff;
 `;
 const Amount = styled.div`
-  margin-top: 20px;
   width: 100%;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #fff;
+  font-size: 24px;
 
   span {
+    font-size: 24px;
+    text-align: center;
+  }
+`;
+const Box = styled.div`
+  width: 80px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  border: 1px solid #c60929;
+  padding: 10px;
+  border-radius: 5px;
+  background: #c60929;
+  text-align: center;
+  span {
+    text-align: center;
+    width: 100%;
     font-size: 18px;
   }
 `;
@@ -229,15 +241,14 @@ const Dashboard = () => {
       {/* Left Panel */}
       <LeftPanel>
         <DashboardBox>
-          <img className="nono" src={nono} alt="" />
           <Amount>
             <span>Accumulated bonus distribution amount </span>
-            <RedText> 1111</RedText>
           </Amount>
+          <Column>
+            <Box> 1111</Box>
+          </Column>
           <Flex>
-            <Title>
-              <span>Bonus distribution records</span>
-            </Title>
+            <span>Bonus distribution records</span>
           </Flex>
           <Column>
             <ListContainer>

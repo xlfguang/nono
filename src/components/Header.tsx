@@ -1,13 +1,20 @@
 // Header.js
 
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import nono from "@/assets/img/no-no.webp";
 
 // Styled components
 const HeaderWrapper = styled.header`
   background-color: #000;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
 `;
 
 const Nav = styled.nav`
@@ -31,6 +38,7 @@ const NavLink = styled(Link)`
 const Header = () => {
   return (
     <HeaderWrapper>
+      <img src={nono} alt="" />
       <Nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/dashboard">DashBoard</NavLink>
