@@ -218,21 +218,81 @@ const Dashboard = () => {
 
   // Sample data
   const rankList = [
-    { rank: 1, address: "0x1234567890abcdef67890abcdef" },
-    { rank: 2, address: "0x0987654321fedcba67890abcdef" },
-    { rank: 3, address: "0xfedcba098765432167890abcdef" },
-    { rank: 4, address: "0xfedcba098765432167890abcdef" },
-    { rank: 5, address: "0xfedcba098765432167890abcdef" },
-    { rank: 6, address: "0xfedcba098765432167890abcdef" },
-    { rank: 7, address: "0xfedcba098765432167890abcdef" },
-    { rank: 8, address: "0xfedcba098765432167890abcdef" },
-    { rank: 9, address: "0xfedcba098765432167890abcdef" },
-    { rank: 10, address: "0xfedcba098765432167890abcdef" },
-    { rank: 11, address: "0xfedcba098765432167890abcdef" },
-    { rank: 12, address: "0xfedcba098765432167890abcdef" },
-    { rank: 13, address: "0xfedcba098765432167890abcdef" },
-    { rank: 14, address: "0xfedcba098765432167890abcdef" },
-    { rank: 15, address: "0xfedcba098765432167890abcdef" },
+    {
+      rank: 1,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "1",
+    },
+    {
+      rank: 2,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "1.5",
+    },
+    {
+      rank: 3,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "2",
+    },
+    {
+      rank: 4,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "2.5",
+    },
+    {
+      rank: 5,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "3",
+    },
+    {
+      rank: 6,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "3.5",
+    },
+    {
+      rank: 7,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "4",
+    },
+    {
+      rank: 8,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 9,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 10,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 11,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 12,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 13,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 14,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
+    {
+      rank: 15,
+      address: "0x000000000000000000000000000000000000dEaD",
+      Eth: "0.1",
+    },
 
     // Add more data as needed
   ];
@@ -261,7 +321,7 @@ const Dashboard = () => {
                   <FlexList key={index}>
                     <Address>{item.address}</Address>
                     <Arrow src={ArrowImg} alt="arrow" />
-                    <BonusAmount>0.1 ETH</BonusAmount>
+                    <BonusAmount>{item.Eth} ETH</BonusAmount>
                   </FlexList>
                 ))}
               </ListBox>
@@ -276,7 +336,7 @@ const Dashboard = () => {
           <Column>
             <Prize>
               <span>
-                NO.1
+                Round.1
                 <RedText> Pool</RedText>
               </span>
               <span
