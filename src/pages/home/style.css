@@ -479,12 +479,12 @@
     font-size: 13px;
   }
 
-  .aboutUs .web-info {
+  .web-info {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .aboutUs .web-info .web-info-right {
+  .web-info .web-info-right {
     margin: 0;
   }
   .info {

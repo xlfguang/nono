@@ -193,13 +193,13 @@ const Amount = styled.div`
 
   span {
     font-size: 24px;
-    text-align: center;
   }
 `;
 const Box = styled.div`
-  width: 80px;
+  width: 120px;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: #fff;
   border: 1px solid #c60929;
   padding: 10px;
@@ -210,6 +210,41 @@ const Box = styled.div`
     text-align: center;
     width: 100%;
     font-size: 18px;
+  }
+`;
+const WEBINFO = styled.div`
+  display: flex;
+  color: #fff;
+  align-items: flex-start;
+  padding: 0 20px;
+  .web-info-right {
+    margin: 0;
+  }
+  .web-info-right {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .web-info-right .line {
+    width: 1px;
+    height: 13px;
+    background: #fff;
+    margin: 0 10px;
+  }
+
+  .web-info-right .web-info-right-item span {
+    color: #fff;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    cursor: pointer;
+  }
+  .web-info-right .web-info-right-item span a {
+    color: #fff;
+    text-decoration: none;
   }
 `;
 // Main component
@@ -297,101 +332,123 @@ const Dashboard = () => {
     // Add more data as needed
   ];
   return (
-    <Container>
-      {/* Left Panel */}
-      <LeftPanel>
-        <DashboardBox>
-          <Amount>
-            <span>Accumulated bonus distribution amount </span>
-          </Amount>
-          <Column>
-            <Box> 1111</Box>
-          </Column>
-          <Flex>
-            <span>Bonus distribution records</span>
-          </Flex>
-          <Column>
-            <ListContainer>
-              <div>
-                <span> </span>
-                <span></span>
-              </div>
-              <ListBox>
-                {rankList.map((item, index) => (
-                  <FlexList key={index}>
-                    <Address>{item.address}</Address>
-                    <Arrow src={ArrowImg} alt="arrow" />
-                    <BonusAmount>{item.Eth} ETH</BonusAmount>
-                  </FlexList>
-                ))}
-              </ListBox>
-            </ListContainer>
-          </Column>
-        </DashboardBox>
-      </LeftPanel>
+    <>
+      <Container>
+        {/* Left Panel */}
+        <LeftPanel>
+          <DashboardBox>
+            <Amount>
+              <span>Accumulated bonus distribution amount </span>
+            </Amount>
+            <Column>
+              <Box> 1111</Box>
+            </Column>
+            <Flex>
+              <span>Bonus distribution records</span>
+            </Flex>
+            <Column>
+              <ListContainer>
+                <div>
+                  <span> </span>
+                  <span></span>
+                </div>
+                <ListBox>
+                  {rankList.map((item, index) => (
+                    <FlexList key={index}>
+                      <Address>{item.address}</Address>
+                      <Arrow src={ArrowImg} alt="arrow" />
+                      <BonusAmount>{item.Eth} ETH</BonusAmount>
+                    </FlexList>
+                  ))}
+                </ListBox>
+              </ListContainer>
+            </Column>
+          </DashboardBox>
+        </LeftPanel>
 
-      {/* Right Panel */}
-      <RightPanel>
-        <DashboardBox>
-          <Column>
-            <Prize>
-              <span>
-                Round.1
-                <RedText> Pool</RedText>
-              </span>
-              <span
-                className="
+        {/* Right Panel */}
+        <RightPanel>
+          <DashboardBox>
+            <Column>
+              <Prize>
+                <span>
+                  Round.1
+                  <RedText> Pool</RedText>
+                </span>
+                <span
+                  className="
                 ETH
               "
-              >
-                4561 / 10000 ETH
-              </span>
-            </Prize>
-          </Column>
-          <Column>
-            <InputBox>
-              <Input
-                type="text"
-                placeholder="Enter wallet address"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <Button>Check</Button>
-            </InputBox>
-          </Column>
-          <Column>
-            <Current>
-              <span>Current address ranking</span>
-              <RedText>NO.233</RedText>
-            </Current>
-          </Column>
-          <Column>
-            <ListContainer>
-              <div>
-                <span> </span>
-                <span></span>
-              </div>
-              <ListBox>
-                {rankList.map((item, index) => (
-                  <ListItem key={index}>
-                    {index <= 4 ? (
-                      <Rank>
-                        <RedText>{item.rank}</RedText>
-                      </Rank>
-                    ) : (
-                      <Rank>{item.rank}</Rank>
-                    )}
+                >
+                  4561 / 10000 ETH
+                </span>
+              </Prize>
+            </Column>
+            <Column>
+              <InputBox>
+                <Input
+                  type="text"
+                  placeholder="Enter wallet address"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
+                <Button>Check</Button>
+              </InputBox>
+            </Column>
+            <Column>
+              <Current>
+                <span>Current address ranking</span>
+                <RedText>NO.233</RedText>
+              </Current>
+            </Column>
+            <Column>
+              <ListContainer>
+                <div>
+                  <span> </span>
+                  <span></span>
+                </div>
+                <ListBox>
+                  {rankList.map((item, index) => (
+                    <ListItem key={index}>
+                      {index <= 4 ? (
+                        <Rank>
+                          <RedText>{item.rank}</RedText>
+                        </Rank>
+                      ) : (
+                        <Rank>{item.rank}</Rank>
+                      )}
 
-                    <Arrow src={ArrowImg} alt="arrow" />
-                    <Address>{item.address}</Address>
-                  </ListItem>
-                ))}
-              </ListBox>
-            </ListContainer>
-          </Column>
-        </DashboardBox>
-      </RightPanel>
-    </Container>
+                      <Arrow src={ArrowImg} alt="arrow" />
+                      <Address>{item.address}</Address>
+                    </ListItem>
+                  ))}
+                </ListBox>
+              </ListContainer>
+            </Column>
+          </DashboardBox>
+        </RightPanel>
+      </Container>
+      <WEBINFO>
+        <div className="time">@2024 NONO Finance </div>
+        <div className="web-info-right">
+          <div className="web-info-right-item">
+            <span>
+              <a href="https://twitter.com/NONOCoins" target="_blank">
+                Twitter
+              </a>
+            </span>
+          </div>
+          <div className="line"></div>
+          <div className="web-info-right-item">
+            <span>
+              <a href="" target="_blank">
+                Telegram
+              </a>
+            </span>
+          </div>
+        </div>
+      </WEBINFO>
+    </>
   );
 };
 

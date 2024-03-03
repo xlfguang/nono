@@ -81,15 +81,15 @@ function index() {
       </div>
       <div className="info">
         <div>
-          <span>Token total supply: </span>
+          <span>Token total supply </span>
           <span>21,000</span>
         </div>
         <div>
-          <span>Liquidity: </span>
+          <span>Liquidity </span>
           <span>100%</span>
         </div>
         <div>
-          <span>Tax: </span>
+          <span>Tax </span>
           <span
             style={{
               fontSize: "18PX",
