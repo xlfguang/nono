@@ -237,20 +237,26 @@
 }
 .info {
   width: 100%;
-  position: absolute;
   color: rgb(198, 9, 41);
   mix-blend-mode: difference;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 }
 .info div {
+  width: 30%;
+  padding: 20px 0;
+  border-radius: 10px;
+  background: #fff;
   display: flex;
-  width: 100%;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   margin: 10px 0;
 }
 .info div span {
   font-size: 22px;
-  color: #fff;
+  color: rgb(198, 9, 41);
 }
 /* 中空字 */
 .stroke {
@@ -480,5 +486,24 @@
 
   .aboutUs .web-info .web-info-right {
     margin: 0;
+  }
+  .info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .info div {
+    width: 100%;
+    padding: 20px 0;
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
   }
 }

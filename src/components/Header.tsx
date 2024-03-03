@@ -33,8 +33,8 @@ const Header = () => {
     <HeaderWrapper>
       <Nav>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/dashboard">dash board</NavLink>
-        <NavLink to="/whitepaper">white paper</NavLink>
+        <NavLink to="/dashboard">DashBoard</NavLink>
+        <NavLink to="/whitepaper">WhitePaper</NavLink>
       </Nav>
     </HeaderWrapper>
   );

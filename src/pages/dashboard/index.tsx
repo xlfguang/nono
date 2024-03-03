@@ -1,24 +1,55 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ArrowImg from "@/assets/img/icons8.png";
+import nono from "@/assets/img/no-no.webp";
+
 // Styled components
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: baseline;
   padding: 20px;
   height: calc(100vh - 125px);
+  .nono {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 `;
-
-const RightPanel = styled.div`
-  width: 60%;
+const LeftPanel = styled.div`
+  width: 45%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+`;
+const Title = styled.h2`
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 20px;
+  width: 100%;
+`;
+
+const RightPanel = styled.div`
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const DashboardBox = styled.div`
   width: 100%;
   max-width: 600px;
+  height: 680px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,8 +57,14 @@ const DashboardBox = styled.div`
 const Prize = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   font-size: 24px;
+  .ETH {
+    border-radius: 5px;
+    border: 2px solid #c60929;
+    padding: 5px 10px;
+  }
 `;
 const Current = styled.div`
   font-size: 18px;
@@ -118,6 +155,9 @@ const ListItem = styled.div`
     border-bottom: none;
   }
 `;
+const FlexList = styled(ListItem)`
+  justify-content: space-evenly;
+`;
 const Rank = styled.span`
   width: 20px;
   text-align: center;
@@ -138,6 +178,27 @@ const Arrow = styled.img`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const Flex = styled(Column)`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
+const BonusAmount = styled.span`
+  color: #fff;
+`;
+const Amount = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+
+  span {
+    font-size: 18px;
+  }
 `;
 // Main component
 const Dashboard = () => {
@@ -163,11 +224,40 @@ const Dashboard = () => {
 
     // Add more data as needed
   ];
-
   return (
     <Container>
       {/* Left Panel */}
-      <div></div>
+      <LeftPanel>
+        <DashboardBox>
+          <img className="nono" src={nono} alt="" />
+          <Amount>
+            <span>Accumulated bonus distribution amount </span>
+            <RedText> 1111</RedText>
+          </Amount>
+          <Flex>
+            <Title>
+              <span>Bonus distribution records</span>
+            </Title>
+          </Flex>
+          <Column>
+            <ListContainer>
+              <div>
+                <span> </span>
+                <span></span>
+              </div>
+              <ListBox>
+                {rankList.map((item, index) => (
+                  <FlexList key={index}>
+                    <Address>{item.address}</Address>
+                    <Arrow src={ArrowImg} alt="arrow" />
+                    <BonusAmount>0.1 ETH</BonusAmount>
+                  </FlexList>
+                ))}
+              </ListBox>
+            </ListContainer>
+          </Column>
+        </DashboardBox>
+      </LeftPanel>
 
       {/* Right Panel */}
       <RightPanel>
@@ -175,21 +265,27 @@ const Dashboard = () => {
           <Column>
             <Prize>
               <span>
-                Prize
+                NO.1
                 <RedText> Pool</RedText>
               </span>
-              <span>4561 / 10000U</span>
+              <span
+                className="
+                ETH
+              "
+              >
+                4561 / 10000 ETH
+              </span>
             </Prize>
           </Column>
           <Column>
             <InputBox>
               <Input
                 type="text"
-                placeholder="Enter wallet address to sort"
+                placeholder="Enter wallet address"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
               />
-              <Button>Inquire</Button>
+              <Button>Check</Button>
             </InputBox>
           </Column>
           <Column>
@@ -201,8 +297,8 @@ const Dashboard = () => {
           <Column>
             <ListContainer>
               <div>
-                <span>TOP 5 </span>
-                <span>Shows your wallet's current ranking</span>
+                <span> </span>
+                <span></span>
               </div>
               <ListBox>
                 {rankList.map((item, index) => (

@@ -55,26 +55,6 @@ function index() {
           <div>
             <img className="nono-img" src={nono} alt="" />
           </div>
-          <div className="info">
-            <div>
-              <span>Token total supply: </span>
-              <span>21,000</span>
-            </div>
-            <div>
-              <span>Liquidity: </span>
-              <span>100%</span>
-            </div>
-            <div>
-              <span>Tax: </span>
-              <span
-                style={{
-                  fontSize: "18PX",
-                }}
-              >
-                10% (7.5% pool, 2.5% marketing)
-              </span>
-            </div>
-          </div>
         </div>
         <div className="introduce-3-right">
           <div className="introduce-3-right-title">
@@ -97,6 +77,26 @@ function index() {
               dynamics.
             </p>
           </div>
+        </div>
+      </div>
+      <div className="info">
+        <div>
+          <span>Token total supply: </span>
+          <span>21,000</span>
+        </div>
+        <div>
+          <span>Liquidity: </span>
+          <span>100%</span>
+        </div>
+        <div>
+          <span>Tax: </span>
+          <span
+            style={{
+              fontSize: "18PX",
+            }}
+          >
+            10% (7.5% pool, 2.5% marketing)
+          </span>
         </div>
       </div>
       <div className="get-in-touch">
