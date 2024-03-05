@@ -249,88 +249,32 @@ const WEBINFO = styled.div`
 `;
 // Main component
 const Dashboard = () => {
+  // 搜索框的值
   const [searchInput, setSearchInput] = useState("");
+  // 累计奖金分配金额
+  const [accumulatedBonus, setAccumulatedBonus] = useState(12415);
+  const [totalSupply, setTotalSupply] = useState(10000);
+  const [burned, setBurned] = useState(157);
+  // 排名
+  const [ranking, setRanking] = useState(1);
 
-  // Sample data
-  const rankList = [
+  // 轮次奖池
+  const [roundPrize, setRoundPrize] = useState([
     {
       rank: 1,
       address: "0x000000000000000000000000000000000000dEaD",
       Eth: "1",
     },
+  ]);
+  // 当前奖池
+  const [currentPrize, setCurrentPrize] = useState([
     {
-      rank: 2,
+      rank: 1,
       address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "1.5",
+      Eth: "1",
     },
-    {
-      rank: 3,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "2",
-    },
-    {
-      rank: 4,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "2.5",
-    },
-    {
-      rank: 5,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "3",
-    },
-    {
-      rank: 6,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "3.5",
-    },
-    {
-      rank: 7,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "4",
-    },
-    {
-      rank: 8,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 9,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 10,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 11,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 12,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 13,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 14,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
-    {
-      rank: 15,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "0.1",
-    },
+  ]);
 
-    // Add more data as needed
-  ];
   return (
     <>
       <Container>
@@ -341,7 +285,7 @@ const Dashboard = () => {
               <span>Accumulated bonus distribution amount </span>
             </Amount>
             <Column>
-              <Box> 1111</Box>
+              <Box>{accumulatedBonus}</Box>
             </Column>
             <Flex>
               <span>Bonus distribution records</span>
@@ -353,7 +297,7 @@ const Dashboard = () => {
                   <span></span>
                 </div>
                 <ListBox>
-                  {rankList.map((item, index) => (
+                  {roundPrize.map((item, index) => (
                     <FlexList key={index}>
                       <Address>{item.address}</Address>
                       <Arrow src={ArrowImg} alt="arrow" />
@@ -380,7 +324,7 @@ const Dashboard = () => {
                 ETH
               "
                 >
-                  4561 / 10000 ETH
+                  {burned} / {totalSupply} ETH
                 </span>
               </Prize>
             </Column>
@@ -398,7 +342,7 @@ const Dashboard = () => {
             <Column>
               <Current>
                 <span>Current address ranking</span>
-                <RedText>NO.233</RedText>
+                <RedText>NO.{ranking}</RedText>
               </Current>
             </Column>
             <Column>
@@ -408,7 +352,7 @@ const Dashboard = () => {
                   <span></span>
                 </div>
                 <ListBox>
-                  {rankList.map((item, index) => (
+                  {currentPrize.map((item, index) => (
                     <ListItem key={index}>
                       {index <= 4 ? (
                         <Rank>
