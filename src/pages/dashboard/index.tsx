@@ -402,12 +402,10 @@ const Dashboard = () => {
                 <ListBox>
                   {topWaitingList.map((item, index) => (
                     <ListItem key={index}>
-                      {index <= 4 ? (
+                      { (
                         <Rank>
                           <RedText>{index + 1}</RedText>
                         </Rank>
-                      ) : (
-                        <Rank>{item}</Rank>
                       )}
 
                       <Arrow src={ArrowImg} alt="arrow" />
