@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ArrowImg from "@/assets/img/icons8.png";
+import {ethers} from "ethers";
+import {getPrizePoolInfo, getRank, getRound, getTopWaitingList, getWinners} from "@/hooks/nono";
 
 // Styled components
 const Container = styled.div`
@@ -252,28 +254,62 @@ const Dashboard = () => {
   // 搜索框的值
   const [searchInput, setSearchInput] = useState("");
   // 累计奖金分配金额
-  const [accumulatedBonus, setAccumulatedBonus] = useState(12415);
-  const [totalSupply, setTotalSupply] = useState(10000);
-  const [burned, setBurned] = useState(157);
+  const [sumBonus, setSumBonus] = useState(ethers.BigNumber.from(0));
+  const [prizePoolCondition, setPrizePoolCondition] = useState(ethers.BigNumber.from(0));
+  const [prizePool, setPrizePool] = useState(ethers.BigNumber.from(0));
   // 排名
-  const [ranking, setRanking] = useState(1);
+  const [rank, setRank] = useState(0);
+  const [round, setRound] = useState(0);
 
   // 轮次奖池
-  const [roundPrize, setRoundPrize] = useState([
-    {
-      rank: 1,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "1",
-    },
+  const [winnerRecords, setWinnerRecords] = useState<{address: string, amount: ethers.BigNumber}[]>([
+    // {
+    //   address: "0x000000000000000000000000000000000000dEaD",
+    //   Eth: "1",
+    // },
   ]);
   // 当前奖池
-  const [currentPrize, setCurrentPrize] = useState([
-    {
-      rank: 1,
-      address: "0x000000000000000000000000000000000000dEaD",
-      Eth: "1",
-    },
-  ]);
+  const [topWaitingList, setTopWaitingList] = useState<string[]>([]);
+
+  const syncDatas = async () => {
+      try {
+          const _prizePoolInfos = await getPrizePoolInfo();
+          setPrizePoolCondition(_prizePoolInfos.prizePoolCondition);
+          setPrizePool(_prizePoolInfos.prizePool);
+
+          const _round = await getRound();
+          setRound(_round);
+
+          const topWaitingList = await getTopWaitingList(100);
+          setTopWaitingList(topWaitingList);
+
+          const records = await getWinners();
+          setWinnerRecords(records);
+
+          let sum = ethers.BigNumber.from(0);
+          for (const record of records) {
+              sum = sum.add(record.amount);
+          }
+          setSumBonus(sum);
+      } catch (error) {
+          console.log(error);
+      }
+
+      await new Promise((r) => setTimeout(r, 3000));
+      syncDatas();
+  };
+
+  syncDatas();
+
+  const searchRank = async () => {
+      // ethers.utils.isAddress(searchInput); 可以用来检查输入是否合法
+    try {
+      const rank = await getRank(searchInput);
+      setRank(rank);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -285,7 +321,7 @@ const Dashboard = () => {
               <span>Accumulated bonus distribution amount </span>
             </Amount>
             <Column>
-              <Box>{accumulatedBonus}</Box>
+              <Box>{ethers.utils.formatEther(sumBonus).replace(/\.0$/,'')}</Box>
             </Column>
             <Flex>
               <span>Bonus distribution records</span>
@@ -297,11 +333,11 @@ const Dashboard = () => {
                   <span></span>
                 </div>
                 <ListBox>
-                  {roundPrize.map((item, index) => (
+                  {winnerRecords.map((item, index) => (
                     <FlexList key={index}>
                       <Address>{item.address}</Address>
                       <Arrow src={ArrowImg} alt="arrow" />
-                      <BonusAmount>{item.Eth} ETH</BonusAmount>
+                      <BonusAmount>{ethers.utils.formatEther(item.amount).replace(/\.0$/, '')} ETH</BonusAmount>
                     </FlexList>
                   ))}
                 </ListBox>
@@ -316,7 +352,7 @@ const Dashboard = () => {
             <Column>
               <Prize>
                 <span>
-                  Round.1
+                  Round.{round}
                   <RedText> Pool</RedText>
                 </span>
                 <span
@@ -324,7 +360,7 @@ const Dashboard = () => {
                 ETH
               "
                 >
-                  {burned} / {totalSupply} ETH
+                  { ethers.utils.formatEther(prizePool).replace(/\.0$/,'') } / { ethers.utils.formatEther(prizePoolCondition).replace(/\.0$/,'') } ETH
                 </span>
               </Prize>
             </Column>
@@ -336,13 +372,13 @@ const Dashboard = () => {
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                 />
-                <Button>Check</Button>
+                <Button onClick={searchRank}>Check</Button>
               </InputBox>
             </Column>
             <Column>
               <Current>
                 <span>Current address ranking</span>
-                <RedText>NO.{ranking}</RedText>
+                <RedText>NO.{rank ? rank : '--'}</RedText>
               </Current>
             </Column>
             <Column>
@@ -352,18 +388,18 @@ const Dashboard = () => {
                   <span></span>
                 </div>
                 <ListBox>
-                  {currentPrize.map((item, index) => (
+                  {topWaitingList.map((item, index) => (
                     <ListItem key={index}>
                       {index <= 4 ? (
                         <Rank>
-                          <RedText>{item.rank}</RedText>
+                          <RedText>{index + 1}</RedText>
                         </Rank>
                       ) : (
-                        <Rank>{item.rank}</Rank>
+                        <Rank>{item}</Rank>
                       )}
 
                       <Arrow src={ArrowImg} alt="arrow" />
-                      <Address>{item.address}</Address>
+                      <Address>{item}</Address>
                     </ListItem>
                   ))}
                 </ListBox>
