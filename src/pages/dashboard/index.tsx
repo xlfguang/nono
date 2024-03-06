@@ -250,6 +250,9 @@ const WEBINFO = styled.div`
   }
 `;
 // Main component
+
+let once = true;
+
 const Dashboard = () => {
   // 搜索框的值
   const [searchInput, setSearchInput] = useState("");
@@ -299,7 +302,8 @@ const Dashboard = () => {
       syncDatas();
   };
 
-  syncDatas();
+  once && syncDatas();
+  once = false; // 比较傻逼的写法，以此来保证只执行一次
 
   const searchRank = async () => {
       // ethers.utils.isAddress(searchInput); 可以用来检查输入是否合法

@@ -99,16 +99,17 @@ const getWinners = async (): Promise<{address: string, amount: ethers.BigNumber}
     const winners = await contract.getWinners();
     const prizePoolCondition = await contract.prizePoolCondition();
     const prizePoolConditionIncrease = await contract.prizePoolConditionIncrease();
+    const pricePoolConditionFirst = prizePoolCondition.sub(prizePoolConditionIncrease.mul(winners.length));
     const result: {address: string, amount: ethers.BigNumber}[] = [];
     let round = 0;
     for (const winner of winners) {
         result.push({
             address: winner,
-            amount: prizePoolCondition.add(prizePoolConditionIncrease.mul(round)),
+            amount: pricePoolConditionFirst.add(prizePoolConditionIncrease.mul(round)),
         });
         round++;
     }
-    return winners;
+    return result;
 };
 
 const getTopWaitingList = async (len: number): Promise<string[]> => {
