@@ -249,10 +249,17 @@ const WEBINFO = styled.div`
     text-decoration: none;
   }
 `;
+
+console.log(1111);
+let sync: any;
+let timer = setInterval(() => {
+    if (sync) {
+        sync();
+        clearInterval(timer);
+    }
+}, 1000);
+
 // Main component
-
-let once = true;
-
 const Dashboard = () => {
   // 搜索框的值
   const [searchInput, setSearchInput] = useState("");
@@ -274,36 +281,37 @@ const Dashboard = () => {
   // 当前奖池
   const [topWaitingList, setTopWaitingList] = useState<string[]>([]);
 
-  const syncDatas = async () => {
+  sync = async () => {
+      console.log('sync');
       try {
-          const _prizePoolInfos = await getPrizePoolInfo();
-          setPrizePoolCondition(_prizePoolInfos.prizePoolCondition);
-          setPrizePool(_prizePoolInfos.prizePool);
+          await Promise.all([
+            getPrizePoolInfo().then(_prizePoolInfos => {
+              setPrizePoolCondition(_prizePoolInfos.prizePoolCondition);
+              setPrizePool(_prizePoolInfos.prizePool);
+            }),
+            getRound().then(_round => {
+                setRound(_round);
+            }),
+            getTopWaitingList(100).then(_topWaitingList => {
+                setTopWaitingList(_topWaitingList);
+            }),
+            getWinners().then(_winnerRecords => {
+                let sum = ethers.BigNumber.from(0);
+                for (const record of _winnerRecords) {
+                    sum = sum.add(record.amount);
+                }
+                setWinnerRecords(_winnerRecords);
+                setSumBonus(sum);
+            }),
+          ]);
 
-          const _round = await getRound();
-          setRound(_round);
-
-          const topWaitingList = await getTopWaitingList(100);
-          setTopWaitingList(topWaitingList);
-
-          const records = await getWinners();
-          setWinnerRecords(records);
-
-          let sum = ethers.BigNumber.from(0);
-          for (const record of records) {
-              sum = sum.add(record.amount);
-          }
-          setSumBonus(sum);
       } catch (error) {
-          console.log(error);
+          // console.log(error);
       }
 
       await new Promise((r) => setTimeout(r, 3000));
-      syncDatas();
+      sync();
   };
-
-  once && syncDatas();
-  once = false; // 比较傻逼的写法，以此来保证只执行一次
 
   const searchRank = async () => {
       // ethers.utils.isAddress(searchInput); 可以用来检查输入是否合法
