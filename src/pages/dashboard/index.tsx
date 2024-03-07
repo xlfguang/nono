@@ -1,8 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ArrowImg from "@/assets/img/icons8.png";
-import {ethers} from "ethers";
-import {getPrizePoolInfo, getRank, getRound, getTopWaitingList, getWinners} from "@/hooks/nono";
+import { ethers } from "ethers";
+import {
+  getPrizePoolInfo,
+  getRank,
+  getRound,
+  getTopWaitingList,
+  getWinners,
+} from "@/hooks/nono";
 
 // Styled components
 const Container = styled.div`
@@ -10,7 +16,7 @@ const Container = styled.div`
   justify-content: space-evenly;
   align-items: center;
   padding: 20px;
-  height: calc(100vh - 125px);
+  min-height: calc(100vh - 125px);
   .nono {
     width: 200px;
     height: 200px;
@@ -61,6 +67,9 @@ const Prize = styled.div`
     border-radius: 5px;
     border: 2px solid #c60929;
     padding: 5px 10px;
+  }
+  @media (max-width: 768px) {
+    font-size: 18px;
   }
 `;
 const Current = styled.div`
@@ -253,10 +262,10 @@ const WEBINFO = styled.div`
 console.log(1111);
 let sync: any;
 let timer = setInterval(() => {
-    if (sync) {
-        sync();
-        clearInterval(timer);
-    }
+  if (sync) {
+    sync();
+    clearInterval(timer);
+  }
 }, 1000);
 
 // Main component
@@ -265,14 +274,18 @@ const Dashboard = () => {
   const [searchInput, setSearchInput] = useState("");
   // 累计奖金分配金额
   const [sumBonus, setSumBonus] = useState(ethers.BigNumber.from(0));
-  const [prizePoolCondition, setPrizePoolCondition] = useState(ethers.BigNumber.from(0));
+  const [prizePoolCondition, setPrizePoolCondition] = useState(
+    ethers.BigNumber.from(0)
+  );
   const [prizePool, setPrizePool] = useState(ethers.BigNumber.from(0));
   // 排名
   const [rank, setRank] = useState(0);
   const [round, setRound] = useState(0);
 
   // 轮次奖池
-  const [winnerRecords, setWinnerRecords] = useState<{address: string, amount: ethers.BigNumber}[]>([
+  const [winnerRecords, setWinnerRecords] = useState<
+    { address: string; amount: ethers.BigNumber }[]
+  >([
     // {
     //   address: "0x000000000000000000000000000000000000dEaD",
     //   Eth: "1",
@@ -282,39 +295,38 @@ const Dashboard = () => {
   const [topWaitingList, setTopWaitingList] = useState<string[]>([]);
 
   sync = async () => {
-      console.log('sync');
-      try {
-          await Promise.all([
-            getPrizePoolInfo().then(_prizePoolInfos => {
-              setPrizePoolCondition(_prizePoolInfos.prizePoolCondition);
-              setPrizePool(_prizePoolInfos.prizePool);
-            }),
-            getRound().then(_round => {
-                setRound(_round);
-            }),
-            getTopWaitingList(100).then(_topWaitingList => {
-                setTopWaitingList(_topWaitingList);
-            }),
-            getWinners().then(_winnerRecords => {
-                let sum = ethers.BigNumber.from(0);
-                for (const record of _winnerRecords) {
-                    sum = sum.add(record.amount);
-                }
-                setWinnerRecords(_winnerRecords);
-                setSumBonus(sum);
-            }),
-          ]);
+    console.log("sync");
+    try {
+      await Promise.all([
+        getPrizePoolInfo().then((_prizePoolInfos) => {
+          setPrizePoolCondition(_prizePoolInfos.prizePoolCondition);
+          setPrizePool(_prizePoolInfos.prizePool);
+        }),
+        getRound().then((_round) => {
+          setRound(_round);
+        }),
+        getTopWaitingList(100).then((_topWaitingList) => {
+          setTopWaitingList(_topWaitingList);
+        }),
+        getWinners().then((_winnerRecords) => {
+          let sum = ethers.BigNumber.from(0);
+          for (const record of _winnerRecords) {
+            sum = sum.add(record.amount);
+          }
+          setWinnerRecords(_winnerRecords);
+          setSumBonus(sum);
+        }),
+      ]);
+    } catch (error) {
+      // console.log(error);
+    }
 
-      } catch (error) {
-          // console.log(error);
-      }
-
-      await new Promise((r) => setTimeout(r, 3000));
-      sync();
+    await new Promise((r) => setTimeout(r, 3000));
+    sync();
   };
 
   const searchRank = async () => {
-      // ethers.utils.isAddress(searchInput); 可以用来检查输入是否合法
+    // ethers.utils.isAddress(searchInput); 可以用来检查输入是否合法
     try {
       const rank = await getRank(searchInput);
       setRank(rank);
@@ -333,7 +345,9 @@ const Dashboard = () => {
               <span>Accumulated bonus distribution amount </span>
             </Amount>
             <Column>
-              <Box>{ethers.utils.formatEther(sumBonus).replace(/\.0$/,'')}</Box>
+              <Box>
+                {ethers.utils.formatEther(sumBonus).replace(/\.0$/, "")}
+              </Box>
             </Column>
             <Flex>
               <span>Bonus distribution records</span>
@@ -349,7 +363,12 @@ const Dashboard = () => {
                     <FlexList key={index}>
                       <Address>{item.address}</Address>
                       <Arrow src={ArrowImg} alt="arrow" />
-                      <BonusAmount>{ethers.utils.formatEther(item.amount).replace(/\.0$/, '')} ETH</BonusAmount>
+                      <BonusAmount>
+                        {ethers.utils
+                          .formatEther(item.amount)
+                          .replace(/\.0$/, "")}{" "}
+                        ETH
+                      </BonusAmount>
                     </FlexList>
                   ))}
                 </ListBox>
@@ -372,7 +391,11 @@ const Dashboard = () => {
                 ETH
               "
                 >
-                  { ethers.utils.formatEther(prizePool).replace(/\.0$/,'') } / { ethers.utils.formatEther(prizePoolCondition).replace(/\.0$/,'') } ETH
+                  {ethers.utils.formatEther(prizePool).replace(/\.0$/, "")} /{" "}
+                  {ethers.utils
+                    .formatEther(prizePoolCondition)
+                    .replace(/\.0$/, "")}{" "}
+                  ETH
                 </span>
               </Prize>
             </Column>
@@ -390,7 +413,7 @@ const Dashboard = () => {
             <Column>
               <Current>
                 <span>Current address ranking</span>
-                <RedText>NO.{rank ? rank : '--'}</RedText>
+                <RedText>NO.{rank ? rank : "--"}</RedText>
               </Current>
             </Column>
             <Column>
@@ -402,11 +425,11 @@ const Dashboard = () => {
                 <ListBox>
                   {topWaitingList.map((item, index) => (
                     <ListItem key={index}>
-                      { (
+                      {
                         <Rank>
                           <RedText>{index + 1}</RedText>
                         </Rank>
-                      )}
+                      }
 
                       <Arrow src={ArrowImg} alt="arrow" />
                       <Address>{item}</Address>
