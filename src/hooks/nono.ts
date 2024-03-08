@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const nonoContract = '0x6188d52008FD334Fc7e143126AE6284096662646';
+const nonoContract = '0x807F54fE6cF951f2f48Bf6b1873546e98F82CF31';
 
 // const rpcs = [
 //     'https://rpc.ankr.com/eth',
@@ -10,14 +10,14 @@ const nonoContract = '0x6188d52008FD334Fc7e143126AE6284096662646';
 // ];
 
 const rpcs = [
-   // 'https://bsc-dataseed1.ninicoin.io',
-   // 'https://bsc-dataseed1.binance.org',
-   // 'https://bsc-dataseed1.defibit.io',
-   // 'https://rpc.ankr.com/bsc',
-   // 'https://koge-rpc-bsc.bnb48.club/',
+   'https://bsc-dataseed1.ninicoin.io',
+   'https://bsc-dataseed1.binance.org',
+   'https://bsc-dataseed1.defibit.io',
+   'https://rpc.ankr.com/bsc',
+   'https://koge-rpc-bsc.bnb48.club/',
 
-   'https://rpc.ankr.com/eth_goerli',
-   'https://goerli.gateway.tenderly.co',
+   // 'https://rpc.ankr.com/eth_goerli',
+   // 'https://goerli.gateway.tenderly.co',
 ];
 let idx = 0;
 
@@ -123,7 +123,6 @@ const getTopWaitingList = async (len: number): Promise<{ address: string, amount
         if (topWaitingList[i] !== ethers.constants.AddressZero && Number(topWaitingList[i]) != 0) 
             result.push({ address: topWaitingList[i]?._hex || topWaitingList[i], amount: balances[i] });
     }
-    console.log(result)
     return result;
 }
 
