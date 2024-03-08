@@ -1,5 +1,7 @@
 import { ethers } from 'ethers';
 
+const nonoContract = '0xBc3691dd1BCE56E1e33d6bb9CA35E8e2eD352a31';
+
 // const rpcs = [
 //     'https://rpc.ankr.com/eth',
 //     'https://ethereum.blockpi.network/v1/rpc/public',
@@ -24,7 +26,6 @@ const getProvider = () => {
     return provider;
 }
 
-const nonoContract = '0xB40cD4Ab7Ab5c4daB5149156A46D78c5bc45c7fC';
 
 const abi = [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor', },
