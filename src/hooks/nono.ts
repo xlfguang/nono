@@ -18,7 +18,6 @@ const rpcs = [
 
    'https://rpc.ankr.com/eth_goerli',
    'https://goerli.gateway.tenderly.co',
-   'https://eth-goerli.public.blastapi.io'
 ];
 let idx = 0;
 
