@@ -121,7 +121,7 @@ const getTopWaitingList = async (len: number): Promise<{ address: string, amount
     const result: { address: string, amount: ethers.BigNumber }[] = [];
     for (let i = 0; i < topWaitingList.length; i++) {
         if (topWaitingList[i] !== ethers.constants.AddressZero && Number(topWaitingList[i]) != 0) 
-            result.push({ address: String(topWaitingList[i]), amount: balances[i] });
+            result.push({ address: topWaitingList[i]?._hex || topWaitingList[i], amount: balances[i] });
     }
     console.log(result)
     return result;
