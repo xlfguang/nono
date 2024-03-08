@@ -292,7 +292,7 @@ const Dashboard = () => {
     // },
   ]);
   // 当前奖池
-  const [topWaitingList, setTopWaitingList] = useState<string[]>([]);
+  const [topWaitingList, setTopWaitingList] = useState<{ address: string, amount: ethers.BigNumber }[]>([]);
 
   sync = async () => {
     console.log("sync");
@@ -338,6 +338,26 @@ const Dashboard = () => {
       console.log(error);
     }
   };
+
+const bnFixed = (n: ethers.BigNumber, decimals: number, fixed: number, notZeroFixed?: number): string => {
+    return numFixed(ethers.utils.formatUnits(n, decimals), fixed, notZeroFixed);
+};
+const numFixed = (n: string | number, fixed: number, notZeroFixed?: number): string => {
+    if (isNaN(Number(n))) return String(n);
+    n = parseFloat('' + n);
+    let eformat = n.toExponential();
+    let tmpArray: any = eformat.match(/\d(?:\.(\d*))?e([+-]\d+)/);
+    n = n.toFixed(Math.max(0, (tmpArray[1] || '').length - tmpArray[2]));
+    const dotIdx = n.indexOf('.');
+    if (dotIdx == -1) return n;
+    const notZeroIdx = n.split('.')[1].search(/[^0]/);
+    let result = n;
+    if (notZeroIdx) {
+        notZeroFixed = notZeroFixed == undefined ? fixed : notZeroFixed;
+        result = n.slice(0, dotIdx + notZeroIdx + notZeroFixed + 1);
+    } else result = n.slice(0, dotIdx + fixed + 1);
+    return result.replace(/\.?0+$/, '');
+};
 
   return (
     <>
@@ -395,7 +415,7 @@ const Dashboard = () => {
                 ETH
               "
                 >
-                  {ethers.utils.formatEther(prizePool).replace(/\.0$/, "")} /{" "}
+                  {bnFixed(prizePool, 18, 4)} / {" "}
                   {ethers.utils
                     .formatEther(prizePoolCondition)
                     .replace(/\.0$/, "")}{" "}
@@ -436,7 +456,12 @@ const Dashboard = () => {
                       }
 
                       <Arrow src={ArrowImg} alt="arrow" />
-                      <Address>{item}</Address>
+                      <Address>{item.address}</Address>
+                      <Arrow src={ArrowImg} alt="arrow" />
+                      <BonusAmount>
+                        {bnFixed(item.amount, 18, 4)}
+                        NONO
+                      </BonusAmount>
                     </ListItem>
                   ))}
                 </ListBox>

@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const nonoContract = '0x4137362e098dBefFa48749975af9C55Dab99E72E';
+const nonoContract = '0x6188d52008FD334Fc7e143126AE6284096662646';
 
 // const rpcs = [
 //     'https://rpc.ankr.com/eth',
@@ -17,6 +17,8 @@ const rpcs = [
    // 'https://koge-rpc-bsc.bnb48.club/',
 
    'https://rpc.ankr.com/eth_goerli',
+   'https://goerli.gateway.tenderly.co',
+   'https://eth-goerli.public.blastapi.io'
 ];
 let idx = 0;
 
@@ -54,7 +56,7 @@ const abi = [
     { inputs: [ { internalType: 'address', name: 'account', type: 'address', }, ], name: 'balanceOf', outputs: [ { internalType: 'uint256', name: '', type: 'uint256', }, ], stateMutability: 'view', type: 'function', },
     { inputs: [], name: 'decimals', outputs: [ { internalType: 'uint8', name: '', type: 'uint8', }, ], stateMutability: 'view', type: 'function', },
     { inputs: [ { internalType: 'address', name: 'addr', type: 'address', }, ], name: 'getRank', outputs: [ { internalType: 'uint256', name: 'rank', type: 'uint256', }, ], stateMutability: 'view', type: 'function', },
-    { inputs: [ { internalType: 'uint256', name: 'maxLen', type: 'uint256', }, ], name: 'getTopWaitingList', outputs: [ { internalType: 'address[]', name: '', type: 'address[]', }, ], stateMutability: 'view', type: 'function', },
+    { inputs: [ { internalType: 'uint256', name: 'maxLen', type: 'uint256', }, ], name: 'getTopWaitingList', outputs: [ { internalType: 'address[]', name: '', type: 'uint256[]', }, { internalType: 'uint256[]', name: '', type: 'uint256[]', } ], stateMutability: 'view', type: 'function', },
     { inputs: [], name: 'getWinners', outputs: [ { internalType: 'address[]', name: '', type: 'address[]', }, ], stateMutability: 'view', type: 'function', },
     { inputs: [], name: 'holdCondition', outputs: [ { internalType: 'uint256', name: '', type: 'uint256', }, ], stateMutability: 'view', type: 'function', },
     { inputs: [], name: 'launched', outputs: [ { internalType: 'bool', name: '', type: 'bool', }, ], stateMutability: 'view', type: 'function', },
@@ -114,10 +116,16 @@ const getWinners = async (): Promise<{address: string, amount: ethers.BigNumber}
     return result;
 };
 
-const getTopWaitingList = async (len: number): Promise<string[]> => {
+const getTopWaitingList = async (len: number): Promise<{ address: string, amount: ethers.BigNumber }[]> => {
     const contract = new ethers.Contract(nonoContract, abi, getProvider());
-    const topWaitingList = await contract.getTopWaitingList(len);
-    return topWaitingList.filter((addr: string) => addr !== ethers.constants.AddressZero);
+    const [topWaitingList, balances] = await contract.getTopWaitingList(len);
+    const result: { address: string, amount: ethers.BigNumber }[] = [];
+    for (let i = 0; i < topWaitingList.length; i++) {
+        if (topWaitingList[i] !== ethers.constants.AddressZero && Number(topWaitingList[i]) != 0) 
+            result.push({ address: String(topWaitingList[i]), amount: balances[i] });
+    }
+    console.log(result)
+    return result;
 }
 
 export {
