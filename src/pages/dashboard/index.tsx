@@ -326,8 +326,12 @@ const Dashboard = () => {
   };
 
   const searchRank = async () => {
-    // ethers.utils.isAddress(searchInput); 可以用来检查输入是否合法
+    setRank(0);
     try {
+      if (ethers.utils.isAddress(searchInput) === false) {
+        alert("Please enter a valid address")
+        return;
+      }
       const rank = await getRank(searchInput);
       setRank(rank);
     } catch (error) {

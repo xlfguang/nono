@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const nonoContract = '0xBc3691dd1BCE56E1e33d6bb9CA35E8e2eD352a31';
+const nonoContract = '0x4137362e098dBefFa48749975af9C55Dab99E72E';
 
 // const rpcs = [
 //     'https://rpc.ankr.com/eth',
