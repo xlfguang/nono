@@ -8,11 +8,13 @@ import { ethers } from 'ethers';
 // ];
 
 const rpcs = [
-   'https://bsc-dataseed1.ninicoin.io',
-   'https://bsc-dataseed1.binance.org',
-   'https://bsc-dataseed1.defibit.io',
-   'https://rpc.ankr.com/bsc',
-   'https://koge-rpc-bsc.bnb48.club/',
+   // 'https://bsc-dataseed1.ninicoin.io',
+   // 'https://bsc-dataseed1.binance.org',
+   // 'https://bsc-dataseed1.defibit.io',
+   // 'https://rpc.ankr.com/bsc',
+   // 'https://koge-rpc-bsc.bnb48.club/',
+
+   'https://rpc.ankr.com/eth_goerli',
 ];
 let idx = 0;
 
@@ -22,8 +24,7 @@ const getProvider = () => {
     return provider;
 }
 
-const provider = new ethers.providers.JsonRpcProvider(rpcs[0]); // 选一个可用的 rpc
-const nonoContract = '0xd13126ce50BC0a596fd0ef9af5Be8894a6a61A6b';
+const nonoContract = '0xB40cD4Ab7Ab5c4daB5149156A46D78c5bc45c7fC';
 
 const abi = [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor', },
