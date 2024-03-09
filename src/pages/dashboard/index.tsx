@@ -154,6 +154,7 @@ const ListBox = styled.div`
 const ListItem = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 8px 0;
   border-bottom: 1px solid #333;
   &:last-child {
@@ -183,6 +184,9 @@ const Arrow = styled.img`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const ArrowRight = styled(Arrow)`
+  margin-right: 0px;
 `;
 const Flex = styled(Column)`
   display: flex;
@@ -292,7 +296,9 @@ const Dashboard = () => {
     // },
   ]);
   // 当前奖池
-  const [topWaitingList, setTopWaitingList] = useState<{ address: string, amount: ethers.BigNumber }[]>([]);
+  const [topWaitingList, setTopWaitingList] = useState<
+    { address: string; amount: ethers.BigNumber }[]
+  >([]);
 
   sync = async () => {
     console.log("sync");
@@ -329,7 +335,7 @@ const Dashboard = () => {
     setRank(0);
     try {
       if (ethers.utils.isAddress(searchInput) === false) {
-        alert("Please enter a valid address")
+        alert("Please enter a valid address");
         return;
       }
       const rank = await getRank(searchInput);
@@ -339,25 +345,34 @@ const Dashboard = () => {
     }
   };
 
-const bnFixed = (n: ethers.BigNumber, decimals: number, fixed: number, notZeroFixed?: number): string => {
+  const bnFixed = (
+    n: ethers.BigNumber,
+    decimals: number,
+    fixed: number,
+    notZeroFixed?: number
+  ): string => {
     return numFixed(ethers.utils.formatUnits(n, decimals), fixed, notZeroFixed);
-};
-const numFixed = (n: string | number, fixed: number, notZeroFixed?: number): string => {
+  };
+  const numFixed = (
+    n: string | number,
+    fixed: number,
+    notZeroFixed?: number
+  ): string => {
     if (isNaN(Number(n))) return String(n);
-    n = parseFloat('' + n);
+    n = parseFloat("" + n);
     let eformat = n.toExponential();
     let tmpArray: any = eformat.match(/\d(?:\.(\d*))?e([+-]\d+)/);
-    n = n.toFixed(Math.max(0, (tmpArray[1] || '').length - tmpArray[2]));
-    const dotIdx = n.indexOf('.');
+    n = n.toFixed(Math.max(0, (tmpArray[1] || "").length - tmpArray[2]));
+    const dotIdx = n.indexOf(".");
     if (dotIdx == -1) return n;
-    const notZeroIdx = n.split('.')[1].search(/[^0]/);
+    const notZeroIdx = n.split(".")[1].search(/[^0]/);
     let result = n;
     if (notZeroIdx) {
-        notZeroFixed = notZeroFixed == undefined ? fixed : notZeroFixed;
-        result = n.slice(0, dotIdx + notZeroIdx + notZeroFixed + 1);
+      notZeroFixed = notZeroFixed == undefined ? fixed : notZeroFixed;
+      result = n.slice(0, dotIdx + notZeroIdx + notZeroFixed + 1);
     } else result = n.slice(0, dotIdx + fixed + 1);
-    return result.replace(/\.?0+$/, '');
-};
+    return result.replace(/\.?0+$/, "");
+  };
 
   return (
     <>
@@ -415,7 +430,7 @@ const numFixed = (n: string | number, fixed: number, notZeroFixed?: number): str
                 ETH
               "
                 >
-                  {bnFixed(prizePool, 18, 4)} / {" "}
+                  {bnFixed(prizePool, 18, 4)} /{" "}
                   {ethers.utils
                     .formatEther(prizePoolCondition)
                     .replace(/\.0$/, "")}{" "}
@@ -457,10 +472,9 @@ const numFixed = (n: string | number, fixed: number, notZeroFixed?: number): str
 
                       <Arrow src={ArrowImg} alt="arrow" />
                       <Address>{item.address}</Address>
-                      <Arrow src={ArrowImg} alt="arrow" />
+                      <ArrowRight src={ArrowImg} alt="arrow" />
                       <BonusAmount>
-                        {bnFixed(item.amount, 18, 4)}
-                        NONO
+                        {bnFixed(item.amount, 18, 4)} $NONO
                       </BonusAmount>
                     </ListItem>
                   ))}
