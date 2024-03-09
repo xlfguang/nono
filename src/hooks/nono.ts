@@ -1,24 +1,24 @@
 import { ethers } from 'ethers';
 
-const nonoContract = '0xcB8c30D2A25fFaF4C053e97579F3a125F3AD2Db8';
-
-// const rpcs = [
-//     'https://rpc.ankr.com/eth',
-//     'https://ethereum.blockpi.network/v1/rpc/public',
-//     'https://eth-mainnet.public.blastapi.io',
-//     'https://singapore.rpc.blxrbdn.com',
-// ];
+const nonoContract = '0x9BeC7A0BafeeaD2eAAEf71c7e0Ee8EaDe0E6b33c';
 
 const rpcs = [
-   'https://bsc-dataseed1.ninicoin.io',
-   'https://bsc-dataseed1.binance.org',
-   'https://bsc-dataseed1.defibit.io',
-   'https://rpc.ankr.com/bsc',
-   'https://koge-rpc-bsc.bnb48.club/',
-
-   // 'https://rpc.ankr.com/eth_goerli',
-   // 'https://goerli.gateway.tenderly.co',
+    'https://rpc.ankr.com/eth',
+    'https://ethereum.blockpi.network/v1/rpc/public',
+    'https://eth-mainnet.public.blastapi.io',
+    'https://singapore.rpc.blxrbdn.com',
 ];
+
+// const rpcs = [
+//    'https://bsc-dataseed1.ninicoin.io',
+//    'https://bsc-dataseed1.binance.org',
+//    'https://bsc-dataseed1.defibit.io',
+//    'https://rpc.ankr.com/bsc',
+//    'https://koge-rpc-bsc.bnb48.club/',
+
+//    // 'https://rpc.ankr.com/eth_goerli',
+//    // 'https://goerli.gateway.tenderly.co',
+// ];
 let idx = 0;
 
 const getProvider = () => {

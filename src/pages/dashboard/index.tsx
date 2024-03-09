@@ -497,7 +497,7 @@ const Dashboard = () => {
           <div className="line"></div>
           <div className="web-info-right-item">
             <span>
-              <a href="" target="_blank">
+              <a href="https://t.me/NONOcoins" target="_blank">
                 Telegram
               </a>
             </span>

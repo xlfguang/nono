@@ -42,7 +42,7 @@ const Header = () => {
       <Nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/dashboard">DashBoard</NavLink>
-        <NavLink to="/whitepaper">WhitePaper</NavLink>
+        <NavLink to="https://docs.nono.finance/whats-nono/summary">WhitePaper</NavLink>
       </Nav>
     </HeaderWrapper>
   );
