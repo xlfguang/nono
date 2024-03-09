@@ -507,3 +507,23 @@
     margin: 10px 0;
   }
 }
+.Contract {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding: 0 20px;
+  background: #16191b;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  span {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .red {
+    color: rgb(198, 9, 41);
+  }
+}

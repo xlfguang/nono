@@ -99,6 +99,10 @@ function index() {
           </span>
         </div>
       </div>
+      <div className="Contract">
+        <span>Contract</span>
+        <span className="red">0x9BeC7A0BafeeaD2eAAEf71c7e0Ee8EaDe0E6b33c</span>
+      </div>
       <div className="get-in-touch">
         <div className="content">
           <p>
