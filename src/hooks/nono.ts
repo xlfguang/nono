@@ -5,8 +5,7 @@ const nonoContract = '0x9BeC7A0BafeeaD2eAAEf71c7e0Ee8EaDe0E6b33c';
 const rpcs = [
     'https://rpc.ankr.com/eth',
     'https://ethereum.blockpi.network/v1/rpc/public',
-    'https://eth-mainnet.public.blastapi.io',
-    'https://singapore.rpc.blxrbdn.com',
+    'https://eth-mainnet.public.blastapi.io'
 ];
 
 // const rpcs = [
