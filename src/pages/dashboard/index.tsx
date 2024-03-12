@@ -84,6 +84,11 @@ const Column = styled.div`
   width: 100%;
   color: #fff;
 `;
+const ColumnFlex = styled(Column)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 const InputBox = styled.div`
   display: flex;
   align-items: center;
@@ -383,11 +388,13 @@ const Dashboard = () => {
             <Amount>
               <span>Accumulated bonus distribution amount </span>
             </Amount>
-            <Column>
+            <ColumnFlex>
               <Box>
                 {ethers.utils.formatEther(sumBonus).replace(/\.0$/, "")}
+                &ensp;ETH
               </Box>
-            </Column>
+              <span>Total deflation：XX $NONO</span>
+            </ColumnFlex>
             <Flex>
               <span>Bonus distribution records</span>
             </Flex>
