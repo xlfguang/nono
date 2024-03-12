@@ -136,13 +136,17 @@ Error generating stack: `+o.message+`
 `,ki=xe.div`
   width: 100%;
   color: #fff;
-`,__=xe.div`
+`,__=xe(ki)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`,k_=xe.div`
   display: flex;
   align-items: center;
   height: 40px;
   background-color: #fff;
   border-radius: 5px;
-`,k_=xe.input`
+`,N_=xe.input`
   width: 80%;
   padding: 8px;
   height: 40px;
@@ -160,7 +164,7 @@ Error generating stack: `+o.message+`
   &:focus {
     border: 1px solid #000;
   }
-`,N_=xe.button`
+`,P_=xe.button`
   width: 20%;
   padding: 8px 16px;
   height: 40px;
@@ -205,9 +209,9 @@ Error generating stack: `+o.message+`
   &:last-child {
     border-bottom: none;
   }
-`,P_=xe(m1)`
+`,C_=xe(m1)`
   justify-content: space-evenly;
-`,C_=xe.span`
+`,M_=xe.span`
   width: 20px;
   text-align: center;
   margin-right: 5px;
@@ -225,16 +229,16 @@ Error generating stack: `+o.message+`
   display: flex;
   align-items: center;
   justify-content: center;
-`,M_=xe(fh)`
+`,R_=xe(fh)`
   margin-right: 0px;
-`,R_=xe(ki)`
+`,I_=xe(ki)`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
 `,sm=xe.span`
   color: #fff;
-`,I_=xe.div`
+`,T_=xe.div`
   width: 100%;
   height: 45px;
   display: flex;
@@ -246,7 +250,7 @@ Error generating stack: `+o.message+`
   span {
     font-size: 24px;
   }
-`,T_=xe.div`
+`,O_=xe.div`
   width: 120px;
   display: flex;
   align-items: center;
@@ -262,7 +266,7 @@ Error generating stack: `+o.message+`
     width: 100%;
     font-size: 18px;
   }
-`,O_=xe.div`
+`,B_=xe.div`
   display: flex;
   color: #fff;
   align-items: flex-start;
@@ -296,9 +300,9 @@ Error generating stack: `+o.message+`
     color: #fff;
     text-decoration: none;
   }
-`;console.log(1111);let nu,B_=setInterval(()=>{nu&&(nu(),clearInterval(B_))},1e3);const L_=()=>{const[t,e]=W.useState(""),[r,n]=W.useState(H.from(0)),[i,o]=W.useState(H.from(0)),[s,l]=W.useState(H.from(0)),[a,f]=W.useState(0),[h,p]=W.useState(0),[g,_]=W.useState([]),[k,C]=W.useState([]);nu=async()=>{console.log("sync");try{await Promise.all([v_().then(A=>{o(A.prizePoolCondition),l(A.prizePool)}),m_().then(A=>{p(A)}),w_(100).then(A=>{C(A)}),y_().then(A=>{let R=H.from(0);for(const T of A)R=R.add(T.amount);_(A),n(R)})])}catch{}await new Promise(A=>setTimeout(A,3e3)),nu()};const O=async()=>{f(0);try{if(_E(t)===!1){alert("Please enter a valid address");return}const A=await g_(t);f(A)}catch(A){console.log(A)}},x=(A,R,T,L)=>y(p1(A,R),T,L),y=(A,R,T)=>{if(isNaN(Number(A)))return String(A);A=parseFloat(""+A);let U=A.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);A=A.toFixed(Math.max(0,(U[1]||"").length-U[2]));const $=A.indexOf(".");if($==-1)return A;const re=A.split(".")[1].search(/[^0]/);let te=A;return re?(T=T??R,te=A.slice(0,$+re+T+1)):te=A.slice(0,$+R+1),te.replace(/\.?0+$/,"")};return B.jsxs(B.Fragment,{children:[B.jsxs(x_,{children:[B.jsx(A_,{children:B.jsxs(rm,{children:[B.jsx(I_,{children:B.jsx("span",{children:"Accumulated bonus distribution amount "})}),B.jsx(ki,{children:B.jsx(T_,{children:qf(r).replace(/\.0$/,"")})}),B.jsx(R_,{children:B.jsx("span",{children:"Bonus distribution records"})}),B.jsx(ki,{children:B.jsxs(nm,{children:[B.jsxs("div",{children:[B.jsx("span",{children:" "}),B.jsx("span",{})]}),B.jsx(im,{children:g.map((A,R)=>B.jsxs(P_,{children:[B.jsx(om,{children:A.address}),B.jsx(fh,{src:Pf,alt:"arrow"}),B.jsxs(sm,{children:[qf(A.amount).replace(/\.0$/,"")," ","ETH"]})]},R))})]})})]})}),B.jsx(E_,{children:B.jsxs(rm,{children:[B.jsx(ki,{children:B.jsxs(b_,{children:[B.jsxs("span",{children:["Round.",h,B.jsx(Wf,{children:" Pool"})]}),B.jsxs("span",{className:`
+`;console.log(1111);let nu,L_=setInterval(()=>{nu&&(nu(),clearInterval(L_))},1e3);const D_=()=>{const[t,e]=W.useState(""),[r,n]=W.useState(H.from(0)),[i,o]=W.useState(H.from(0)),[s,l]=W.useState(H.from(0)),[a,f]=W.useState(0),[h,p]=W.useState(0),[g,_]=W.useState([]),[k,C]=W.useState([]);nu=async()=>{console.log("sync");try{await Promise.all([v_().then(A=>{o(A.prizePoolCondition),l(A.prizePool)}),m_().then(A=>{p(A)}),w_(100).then(A=>{C(A)}),y_().then(A=>{let R=H.from(0);for(const T of A)R=R.add(T.amount);_(A),n(R)})])}catch{}await new Promise(A=>setTimeout(A,3e3)),nu()};const O=async()=>{f(0);try{if(_E(t)===!1){alert("Please enter a valid address");return}const A=await g_(t);f(A)}catch(A){console.log(A)}},x=(A,R,T,L)=>y(p1(A,R),T,L),y=(A,R,T)=>{if(isNaN(Number(A)))return String(A);A=parseFloat(""+A);let U=A.toExponential().match(/\d(?:\.(\d*))?e([+-]\d+)/);A=A.toFixed(Math.max(0,(U[1]||"").length-U[2]));const $=A.indexOf(".");if($==-1)return A;const re=A.split(".")[1].search(/[^0]/);let te=A;return re?(T=T??R,te=A.slice(0,$+re+T+1)):te=A.slice(0,$+R+1),te.replace(/\.?0+$/,"")};return B.jsxs(B.Fragment,{children:[B.jsxs(x_,{children:[B.jsx(A_,{children:B.jsxs(rm,{children:[B.jsx(T_,{children:B.jsx("span",{children:"Accumulated bonus distribution amount "})}),B.jsxs(__,{children:[B.jsxs(O_,{children:[qf(r).replace(/\.0$/,"")," ETH"]}),B.jsx("span",{children:"Total deflation：XX $NONO"})]}),B.jsx(I_,{children:B.jsx("span",{children:"Bonus distribution records"})}),B.jsx(ki,{children:B.jsxs(nm,{children:[B.jsxs("div",{children:[B.jsx("span",{children:" "}),B.jsx("span",{})]}),B.jsx(im,{children:g.map((A,R)=>B.jsxs(C_,{children:[B.jsx(om,{children:A.address}),B.jsx(fh,{src:Pf,alt:"arrow"}),B.jsxs(sm,{children:[qf(A.amount).replace(/\.0$/,"")," ","ETH"]})]},R))})]})})]})}),B.jsx(E_,{children:B.jsxs(rm,{children:[B.jsx(ki,{children:B.jsxs(b_,{children:[B.jsxs("span",{children:["Round.",h,B.jsx(Wf,{children:" Pool"})]}),B.jsxs("span",{className:`
                 ETH
-              `,children:[x(s,18,4)," /"," ",qf(i).replace(/\.0$/,"")," ","ETH"]})]})}),B.jsx(ki,{children:B.jsxs(__,{children:[B.jsx(k_,{type:"text",placeholder:"Enter wallet address",value:t,onChange:A=>e(A.target.value)}),B.jsx(N_,{onClick:O,children:"Check"})]})}),B.jsx(ki,{children:B.jsxs(S_,{children:[B.jsx("span",{children:"Current address ranking"}),B.jsx("span",{children:"Holding conditions：XX $NONO "}),B.jsxs(Wf,{children:["NO.",a||"--"]})]})}),B.jsx(ki,{children:B.jsxs(nm,{children:[B.jsxs("div",{children:[B.jsx("span",{children:" "}),B.jsx("span",{})]}),B.jsx(im,{children:k.map((A,R)=>B.jsxs(m1,{children:[B.jsx(C_,{children:B.jsx(Wf,{children:R+1})}),B.jsx(fh,{src:Pf,alt:"arrow"}),B.jsx(om,{children:A.address}),B.jsx(M_,{src:Pf,alt:"arrow"}),B.jsxs(sm,{children:[x(A.amount,18,4)," $NONO"]})]},R))})]})})]})})]}),B.jsxs(O_,{children:[B.jsx("div",{className:"time",children:"@2024 NONO Finance "}),B.jsxs("div",{className:"web-info-right",children:[B.jsx("div",{className:"web-info-right-item",children:B.jsx("span",{children:B.jsx("a",{href:"https://twitter.com/NONOCoins",target:"_blank",children:"Twitter"})})}),B.jsx("div",{className:"line"}),B.jsx("div",{className:"web-info-right-item",children:B.jsx("span",{children:B.jsx("a",{href:"https://t.me/NONOcoins",target:"_blank",children:"Telegram"})})})]})]})]})},D_=xe.header`
+              `,children:[x(s,18,4)," /"," ",qf(i).replace(/\.0$/,"")," ","ETH"]})]})}),B.jsx(ki,{children:B.jsxs(k_,{children:[B.jsx(N_,{type:"text",placeholder:"Enter wallet address",value:t,onChange:A=>e(A.target.value)}),B.jsx(P_,{onClick:O,children:"Check"})]})}),B.jsx(ki,{children:B.jsxs(S_,{children:[B.jsx("span",{children:"Current address ranking"}),B.jsx("span",{children:"Holding conditions：XX $NONO "}),B.jsxs(Wf,{children:["NO.",a||"--"]})]})}),B.jsx(ki,{children:B.jsxs(nm,{children:[B.jsxs("div",{children:[B.jsx("span",{children:" "}),B.jsx("span",{})]}),B.jsx(im,{children:k.map((A,R)=>B.jsxs(m1,{children:[B.jsx(M_,{children:B.jsx(Wf,{children:R+1})}),B.jsx(fh,{src:Pf,alt:"arrow"}),B.jsx(om,{children:A.address}),B.jsx(R_,{src:Pf,alt:"arrow"}),B.jsxs(sm,{children:[x(A.amount,18,4)," $NONO"]})]},R))})]})})]})})]}),B.jsxs(B_,{children:[B.jsx("div",{className:"time",children:"@2024 NONO Finance "}),B.jsxs("div",{className:"web-info-right",children:[B.jsx("div",{className:"web-info-right-item",children:B.jsx("span",{children:B.jsx("a",{href:"https://twitter.com/NONOCoins",target:"_blank",children:"Twitter"})})}),B.jsx("div",{className:"line"}),B.jsx("div",{className:"web-info-right-item",children:B.jsx("span",{children:B.jsx("a",{href:"https://t.me/NONOcoins",target:"_blank",children:"Telegram"})})})]})]})]})},z_=xe.header`
   background-color: #000;
   padding: 20px;
   display: flex;
@@ -308,7 +312,7 @@ Error generating stack: `+o.message+`
     height: 32px;
     border-radius: 50%;
   }
-`,z_=xe.nav`
+`,U_=xe.nav`
   display: flex;
   justify-content: end;
 `,Qf=xe($2)`
@@ -322,4 +326,4 @@ Error generating stack: `+o.message+`
   &:hover {
     color: lightgray;
   }
-`,U_=()=>B.jsxs(D_,{children:[B.jsx("img",{src:oa,alt:""}),B.jsxs(z_,{children:[B.jsx(Qf,{to:"/",children:"Home"}),B.jsx(Qf,{to:"/dashboard",children:"DashBoard"}),B.jsx(Qf,{to:"https://docs.nono.finance/whats-nono/summary",children:"WhitePaper"})]})]});function F_(){return B.jsxs(B.Fragment,{children:[B.jsx(U_,{}),B.jsxs(O2,{children:[B.jsx(Gc,{path:"/",element:B.jsx(V2,{})}),B.jsx(Gc,{path:"/dashboard",element:B.jsx(L_,{})})]})]})}Kf.createRoot(document.getElementById("root")).render(B.jsxs(j2,{children:[B.jsx(Bi.StrictMode,{children:B.jsx(F_,{})}),","]}));
+`,F_=()=>B.jsxs(z_,{children:[B.jsx("img",{src:oa,alt:""}),B.jsxs(U_,{children:[B.jsx(Qf,{to:"/",children:"Home"}),B.jsx(Qf,{to:"/dashboard",children:"DashBoard"}),B.jsx(Qf,{to:"https://docs.nono.finance/whats-nono/summary",children:"WhitePaper"})]})]});function j_(){return B.jsxs(B.Fragment,{children:[B.jsx(F_,{}),B.jsxs(O2,{children:[B.jsx(Gc,{path:"/",element:B.jsx(V2,{})}),B.jsx(Gc,{path:"/dashboard",element:B.jsx(D_,{})})]})]})}Kf.createRoot(document.getElementById("root")).render(B.jsxs(j2,{children:[B.jsx(Bi.StrictMode,{children:B.jsx(j_,{})}),","]}));
