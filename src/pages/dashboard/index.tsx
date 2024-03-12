@@ -452,6 +452,7 @@ const Dashboard = () => {
             <Column>
               <Current>
                 <span>Current address ranking</span>
+                <span>Holding conditions：XX $NONO </span>
                 <RedText>NO.{rank ? rank : "--"}</RedText>
               </Current>
             </Column>
