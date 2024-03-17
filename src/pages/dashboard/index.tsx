@@ -16,7 +16,6 @@ const Container = styled.div`
   justify-content: space-evenly;
   align-items: center;
   padding: 20px;
-  min-height: calc(100vh - 125px);
   .nono {
     width: 200px;
     height: 200px;
@@ -49,8 +48,7 @@ const RightPanel = styled.div`
 `;
 const DashboardBox = styled.div`
   width: 100%;
-  max-width: 600px;
-  height: 540px;
+  min-height: 540px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +62,7 @@ const Prize = styled.div`
   font-size: 24px;
   height: 48px;
   .ETH {
+    width: 80px;
     border-radius: 5px;
     border: 2px solid #c60929;
     padding: 5px 10px;
@@ -72,10 +71,44 @@ const Prize = styled.div`
     font-size: 18px;
   }
 `;
+
+const ProgressBar = styled.div<{
+  progress: string;
+  total: string;
+}>`
+  width: 150px;
+  height: 30px;
+  background-color: #16191b;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+
+  &::before {
+    content: "";
+    width: ${(props) => (Number(props.progress) / Number(props.total)) * 100}%;
+    height: 100%;
+    background-color: #c60929;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  span {
+    color: #fff;
+    font-size: 14px;
+    background: #16191b;
+  }
+`;
 const Current = styled.div`
   font-size: 18px;
   display: flex;
   justify-content: space-between;
+  span {
+    font-size: 14px;
+  }
 `;
 const RedText = styled.span`
   color: #c60929;
@@ -267,8 +300,27 @@ const WEBINFO = styled.div`
     text-decoration: none;
   }
 `;
+const Circle = styled.div`
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 20px solid #c60929;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #c60929;
+  p {
+    margin: 0;
+    font-size: 32px;
+  }
+  .number {
+    font-size: 92px;
+    font-weight: 800;
+  }
+`;
 
-console.log(1111);
 let sync: any;
 let timer = setInterval(() => {
   if (sync) {
@@ -386,6 +438,9 @@ const Dashboard = () => {
         <LeftPanel>
           <DashboardBox>
             <Amount>
+              <span>Sequential prize pool </span>
+            </Amount>
+            <Amount>
               <span>Accumulated bonus distribution amount </span>
             </Amount>
             <ColumnFlex>
@@ -432,17 +487,20 @@ const Dashboard = () => {
                   Round.{round}
                   <RedText> Pool</RedText>
                 </span>
-                <span
-                  className="
-                ETH
-              "
-                >
-                  {bnFixed(prizePool, 18, 4)} /{" "}
-                  {ethers.utils
+                <ProgressBar
+                  progress={bnFixed(prizePool, 18, 4)}
+                  total={ethers.utils
                     .formatEther(prizePoolCondition)
-                    .replace(/\.0$/, "")}{" "}
+                    .replace(/\.0$/, "")}
+                >
+                  <span>{bnFixed(prizePool, 18, 4)}</span>/
+                  <span>
+                    {ethers.utils
+                      .formatEther(prizePoolCondition)
+                      .replace(/\.0$/, "")}
+                  </span>
                   ETH
-                </span>
+                </ProgressBar>
               </Prize>
             </Column>
             <Column>
@@ -459,7 +517,7 @@ const Dashboard = () => {
             <Column>
               <Current>
                 <span>Current address ranking</span>
-                <span>Holding conditions：XX $NONO </span>
+                <span>Sorting condition: Purchase ≥ 0.05 ETH $NONO</span>
                 <RedText>NO.{rank ? rank : "--"}</RedText>
               </Current>
             </Column>
@@ -491,6 +549,74 @@ const Dashboard = () => {
             </Column>
           </DashboardBox>
         </RightPanel>
+      </Container>
+      <Container>
+        <LeftPanel>
+          <DashboardBox>
+            <Amount>
+              <span>Arena prize pool </span>
+            </Amount>
+            <div>
+              <Circle>
+                <p className="number">132</p>
+                <p>ETH</p>
+              </Circle>
+              <Amount>
+                <span>Countdown</span>
+                <span> 29 :10</span>
+              </Amount>
+            </div>
+            <Amount>
+              <span>Current champion</span>
+              <span>Purchase amount</span>
+            </Amount>
+            <Amount>
+              <span>0X56465a4sd8484a8s4fd88f</span>
+              <span>1545845 ETH</span>
+            </Amount>
+            <ColumnFlex
+              style={{
+                margin: "10px 0",
+              }}
+            >
+              <Box>
+                {ethers.utils.formatEther(sumBonus).replace(/\.0$/, "")}
+                &ensp;ETH
+              </Box>
+              <span></span>
+            </ColumnFlex>
+            <Flex
+              style={{
+                margin: "10px 0",
+              }}
+            >
+              <span>Bonus distribution records</span>
+            </Flex>
+            <Column>
+              <ListContainer>
+                <div>
+                  <span> </span>
+                  <span></span>
+                </div>
+                <ListBox>
+                  {winnerRecords.map((item, index) => (
+                    <FlexList key={index}>
+                      <Address>{item.address}</Address>
+                      <Arrow src={ArrowImg} alt="arrow" />
+                      <BonusAmount>
+                        {ethers.utils
+                          .formatEther(item.amount)
+                          .replace(/\.0$/, "")}{" "}
+                        ETH
+                      </BonusAmount>
+                    </FlexList>
+                  ))}
+                </ListBox>
+              </ListContainer>
+            </Column>
+          </DashboardBox>
+        </LeftPanel>
+        <RightPanel></RightPanel>
       </Container>
       <WEBINFO>
         <div className="time">@2024 NONO Finance </div>
