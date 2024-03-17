@@ -11,11 +11,12 @@ import {
 } from "@/hooks/nono";
 
 // Styled components
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 20px;
+  min-height: calc(100vh - 100px);
   .nono {
     width: 200px;
     height: 200px;
@@ -26,7 +27,7 @@ const Container = styled.div`
     justify-content: flex-start;
   }
 `;
-const LeftPanel = styled.div`
+export const LeftPanel = styled.div`
   width: 45%;
   display: flex;
   align-items: center;
@@ -37,7 +38,7 @@ const LeftPanel = styled.div`
   }
 `;
 
-const RightPanel = styled.div`
+export const RightPanel = styled.div`
   width: 45%;
   display: flex;
   align-items: center;
@@ -46,7 +47,7 @@ const RightPanel = styled.div`
     width: 100%;
   }
 `;
-const DashboardBox = styled.div`
+export const DashboardBox = styled.div`
   width: 100%;
   min-height: 540px;
   display: flex;
@@ -54,7 +55,7 @@ const DashboardBox = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const Prize = styled.div`
+export const Prize = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,7 +73,7 @@ const Prize = styled.div`
   }
 `;
 
-const ProgressBar = styled.div<{
+export const ProgressBar = styled.div<{
   progress: string;
   total: string;
 }>`
@@ -102,7 +103,7 @@ const ProgressBar = styled.div<{
     background: #16191b;
   }
 `;
-const Current = styled.div`
+export const Current = styled.div`
   font-size: 18px;
   display: flex;
   justify-content: space-between;
@@ -110,26 +111,26 @@ const Current = styled.div`
     font-size: 14px;
   }
 `;
-const RedText = styled.span`
+export const RedText = styled.span`
   color: #c60929;
 `;
-const Column = styled.div`
+export const Column = styled.div`
   width: 100%;
   color: #fff;
 `;
-const ColumnFlex = styled(Column)`
+export const ColumnFlex = styled(Column)`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
-const InputBox = styled.div`
+export const InputBox = styled.div`
   display: flex;
   align-items: center;
   height: 40px;
   background-color: #fff;
   border-radius: 5px;
 `;
-const Input = styled.input`
+export const Input = styled.input`
   width: 80%;
   padding: 8px;
   height: 40px;
@@ -149,7 +150,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   width: 20%;
   padding: 8px 16px;
   height: 40px;
@@ -160,14 +161,14 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const ListContainer = styled.div`
+export const ListContainer = styled.div`
   height: 300px;
   background-color: #16191b;
   color: #fff;
   padding: 10px;
   border-radius: 5px;
 `;
-const ListBox = styled.div`
+export const ListBox = styled.div`
   height: calc(100% - 40px);
   margin-top: 15px;
   overflow-y: auto;
@@ -189,7 +190,7 @@ const ListBox = styled.div`
     background: #555;
   }
 `;
-const ListItem = styled.div`
+export const ListItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -199,21 +200,21 @@ const ListItem = styled.div`
     border-bottom: none;
   }
 `;
-const FlexList = styled(ListItem)`
+export const FlexList = styled(ListItem)`
   justify-content: space-evenly;
 `;
-const Rank = styled.span`
+export const Rank = styled.span`
   width: 20px;
   text-align: center;
   margin-right: 5px;
   color: #fff;
   font-weight: bold;
 `;
-const Address = styled.span`
+export const Address = styled.span`
   color: #fff;
   font-size: 14px;
 `;
-const Arrow = styled.img`
+export const Arrow = styled.img`
   font-size: 20px;
   margin-right: 10px;
   border-radius: 50%;
@@ -223,19 +224,19 @@ const Arrow = styled.img`
   align-items: center;
   justify-content: center;
 `;
-const ArrowRight = styled(Arrow)`
+export const ArrowRight = styled(Arrow)`
   margin-right: 0px;
 `;
-const Flex = styled(Column)`
+export const Flex = styled(Column)`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
 `;
-const BonusAmount = styled.span`
+export const BonusAmount = styled.span`
   color: #fff;
 `;
-const Amount = styled.div`
+export const Amount = styled.div`
   width: 100%;
   height: 45px;
   display: flex;
@@ -248,7 +249,7 @@ const Amount = styled.div`
     font-size: 24px;
   }
 `;
-const Box = styled.div`
+export const Box = styled.div`
   width: 120px;
   display: flex;
   align-items: center;
@@ -265,7 +266,7 @@ const Box = styled.div`
     font-size: 18px;
   }
 `;
-const WEBINFO = styled.div`
+export const WEBINFO = styled.div`
   display: flex;
   color: #fff;
   align-items: flex-start;
@@ -300,7 +301,7 @@ const WEBINFO = styled.div`
     text-decoration: none;
   }
 `;
-const Circle = styled.div`
+export const Circle = styled.div`
   width: 320px;
   height: 320px;
   border-radius: 50%;
@@ -550,74 +551,7 @@ const Dashboard = () => {
           </DashboardBox>
         </RightPanel>
       </Container>
-      <Container>
-        <LeftPanel>
-          <DashboardBox>
-            <Amount>
-              <span>Arena prize pool </span>
-            </Amount>
-            <div>
-              <Circle>
-                <p className="number">132</p>
-                <p>ETH</p>
-              </Circle>
-              <Amount>
-                <span>Countdown</span>
-                <span> 29 :10</span>
-              </Amount>
-            </div>
-            <Amount>
-              <span>Current champion</span>
-              <span>Purchase amount</span>
-            </Amount>
-            <Amount>
-              <span>0X56465a4sd8484a8s4fd88f</span>
-              <span>1545845 ETH</span>
-            </Amount>
-            <ColumnFlex
-              style={{
-                margin: "10px 0",
-              }}
-            >
-              <Box>
-                {ethers.utils.formatEther(sumBonus).replace(/\.0$/, "")}
-                &ensp;ETH
-              </Box>
-              <span></span>
-            </ColumnFlex>
-            <Flex
-              style={{
-                margin: "10px 0",
-              }}
-            >
-              <span>Bonus distribution records</span>
-            </Flex>
-            <Column>
-              <ListContainer>
-                <div>
-                  <span> </span>
-                  <span></span>
-                </div>
-                <ListBox>
-                  {winnerRecords.map((item, index) => (
-                    <FlexList key={index}>
-                      <Address>{item.address}</Address>
-                      <Arrow src={ArrowImg} alt="arrow" />
-                      <BonusAmount>
-                        {ethers.utils
-                          .formatEther(item.amount)
-                          .replace(/\.0$/, "")}{" "}
-                        ETH
-                      </BonusAmount>
-                    </FlexList>
-                  ))}
-                </ListBox>
-              </ListContainer>
-            </Column>
-          </DashboardBox>
-        </LeftPanel>
-        <RightPanel></RightPanel>
-      </Container>
+
       <WEBINFO>
         <div className="time">@2024 NONO Finance </div>
         <div className="web-info-right">
