@@ -55,7 +55,12 @@ function Arena() {
           <span style={{}}>29:10</span>
         </div>
       </Amount>
-      <Container>
+      <Container
+        style={{
+          marginTop: "50px",
+          alignItems: "flex-start",
+        }}
+      >
         <LeftPanel>
           <DashboardBox>
             <Amount>Accumulated bonus distribution amount</Amount>
