@@ -7,7 +7,7 @@ import {
   getRank,
   getRound,
   getTopWaitingList,
-  getWinners,
+  getWinRecords,
 } from "@/hooks/nono";
 
 // Styled components
@@ -372,12 +372,12 @@ const Dashboard = () => {
         getTopWaitingList(100).then((_topWaitingList) => {
           setTopWaitingList(_topWaitingList);
         }),
-        getWinners().then((_winnerRecords) => {
+        getWinRecords().then((_winnerRecords) => {
           let sum = ethers.BigNumber.from(0);
-          for (const record of _winnerRecords) {
+          for (const record of _winnerRecords.filter(r => r.type == 1)) {
             sum = sum.add(record.amount);
           }
-          setWinnerRecords(_winnerRecords);
+          setWinnerRecords(_winnerRecords.filter(r => r.type == 1));
           setSumBonus(sum);
         }),
       ]);
