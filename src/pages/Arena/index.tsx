@@ -85,7 +85,7 @@ function Arena() {
 
     sync2 = async () => {
         console.log('sync2', currentTopBuyer.time);
-        const time = (currentTopBuyer.time + duration) - Date.now() / 1000 | 0;
+        const time = (currentTopBuyer.time + duration - Date.now() / 1000) | 0;
         if (time <= 0) {
             setCountdown('00:00');
         } else {
@@ -95,6 +95,26 @@ function Arena() {
         }
         await new Promise((r) => setTimeout(r, 500));
         sync2();
+    };
+
+    const bnFixed = (n: ethers.BigNumber, decimals: number, fixed: number, notZeroFixed?: number): string => {
+        return numFixed(ethers.utils.formatUnits(n, decimals), fixed, notZeroFixed);
+    };
+    const numFixed = (n: string | number, fixed: number, notZeroFixed?: number): string => {
+        if (isNaN(Number(n))) return String(n);
+        n = parseFloat('' + n);
+        let eformat = n.toExponential();
+        let tmpArray: any = eformat.match(/\d(?:\.(\d*))?e([+-]\d+)/);
+        n = n.toFixed(Math.max(0, (tmpArray[1] || '').length - tmpArray[2]));
+        const dotIdx = n.indexOf('.');
+        if (dotIdx == -1) return n;
+        const notZeroIdx = n.split('.')[1].search(/[^0]/);
+        let result = n;
+        if (notZeroIdx) {
+            notZeroFixed = notZeroFixed == undefined ? fixed : notZeroFixed;
+            result = n.slice(0, dotIdx + notZeroIdx + notZeroFixed + 1);
+        } else result = n.slice(0, dotIdx + fixed + 1);
+        return result.replace(/\.?0+$/, '');
     };
 
     return (
@@ -172,7 +192,7 @@ function Arena() {
                     <DashboardBox>
                         <div>
                             <Circle>
-                                <p className="number">{ethers.utils.formatEther(prizePool).replace(/\.0$/, '')}</p>
+                                <p className="number">{bnFixed(prizePool, 18, 4, 2)}</p>
                                 <p>ETH</p>
                                 <p>prize pool</p>
                             </Circle>
