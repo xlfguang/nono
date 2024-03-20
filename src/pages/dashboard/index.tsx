@@ -8,6 +8,7 @@ import {
   getRound,
   getTopWaitingList,
   getWinRecords,
+  getBlackAmount,
 } from "@/hooks/nono";
 
 // Styled components
@@ -355,6 +356,7 @@ const Dashboard = () => {
     // },
   ]);
   // 当前奖池
+  const [totalBlack, setTotalBlack] = useState(ethers.BigNumber.from(0));
   const [topWaitingList, setTopWaitingList] = useState<
     { address: string; amount: ethers.BigNumber }[]
   >([]);
@@ -381,6 +383,10 @@ const Dashboard = () => {
           setWinnerRecords(_winnerRecords.filter((r) => r.type == 1));
           setSumBonus(sum);
         }),
+        getBlackAmount().then((re)=>{
+
+          setTotalBlack(re.amount);
+        })
       ]);
     } catch (error) {
       // console.log(error);
@@ -450,7 +456,7 @@ const Dashboard = () => {
                 {ethers.utils.formatEther(sumBonus).replace(/\.0$/, "")}
                 &ensp;ETH
               </Box>
-              <span>Total deflation：XX $NONO</span>
+              <span>Total deflation：{bnFixed(totalBlack, 18, 1)} $NONO</span>
             </ColumnFlex>
             <Flex>
               <span>Bonus distribution records</span>

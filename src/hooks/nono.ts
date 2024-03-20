@@ -104,6 +104,20 @@ const getPrizePoolInfo = async (): Promise<{ prizePool: ethers.BigNumber; prizeP
     };
 };
 
+const getBlackAmount = async (): Promise<{amount: ethers.BigNumber }> => {
+    const contract = new ethers.Contract(nonoContract, abi, getProvider());
+    const winRecords = await contract.getWinRecords();
+    var obj:{amount:ethers.BigNumber} = { amount :ethers.BigNumber.from(0)}
+    var amountAll = ethers.BigNumber.from(0);
+    for (const r of winRecords) {
+        var num = await contract.balanceOf(r.ADDR);
+        amountAll = amountAll.add(num);
+      }
+    obj.amount = amountAll;
+    return obj;
+};
+
+
 const getWinRecords = async (): Promise<{ address: string; amount: ethers.BigNumber, type: number }[]> => {
     const contract = new ethers.Contract(nonoContract, abi, getProvider());
     const winRecords = await contract.getWinRecords();
@@ -152,4 +166,4 @@ const getCurentArena = async (): Promise<{ address: string; amount: ethers.BigNu
     return { address: account, amount, time: time.toNumber() };
 }
 
-export { getRound, getRank, getPrizePoolInfo, getPrizePool2Info, getWinRecords, getTopWaitingList, getTopBuyerTimeThreshold, getCurentArena };
+export { getRound, getRank, getPrizePoolInfo, getPrizePool2Info, getWinRecords, getTopWaitingList, getTopBuyerTimeThreshold, getCurentArena,getBlackAmount };

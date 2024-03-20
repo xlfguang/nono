@@ -101,7 +101,7 @@ function index() {
       </div>
       <div className="Contract">
         <span>Contract</span>
-        <span className="red">0x9BeC7A0BafeeaD2eAAEf71c7e0Ee8EaDe0E6b33c</span>
+        <span className="red">0xC318675322d9663f3BA846513f08b38EBc9b63F5</span>
       </div>
       <div className="get-in-touch">
         <div className="content">
