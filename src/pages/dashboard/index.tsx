@@ -101,6 +101,7 @@ export const ProgressBar = styled.div<{
     color: #fff;
     font-size: 14px;
     background: #16191b;
+    mix-blend-mode: lighten;
   }
 `;
 export const Current = styled.div`
@@ -374,10 +375,10 @@ const Dashboard = () => {
         }),
         getWinRecords().then((_winnerRecords) => {
           let sum = ethers.BigNumber.from(0);
-          for (const record of _winnerRecords.filter(r => r.type == 1)) {
+          for (const record of _winnerRecords.filter((r) => r.type == 1)) {
             sum = sum.add(record.amount);
           }
-          setWinnerRecords(_winnerRecords.filter(r => r.type == 1));
+          setWinnerRecords(_winnerRecords.filter((r) => r.type == 1));
           setSumBonus(sum);
         }),
       ]);
@@ -494,7 +495,8 @@ const Dashboard = () => {
                     .formatEther(prizePoolCondition)
                     .replace(/\.0$/, "")}
                 >
-                  <span>{bnFixed(prizePool, 18, 4)}</span>/
+                  <span>{bnFixed(prizePool, 18, 4)}</span>
+                  <span> / </span>
                   <span>
                     {ethers.utils
                       .formatEther(prizePoolCondition)
