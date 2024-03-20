@@ -95,7 +95,7 @@ function index() {
               fontSize: "18PX",
             }}
           >
-            10% (7.5% pool, 2.5% marketing)
+            10% (6% pool, 2% arena, 2% marketing)
           </span>
         </div>
       </div>
