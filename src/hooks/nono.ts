@@ -1,23 +1,23 @@
 import { ethers } from 'ethers';
 
-const nonoContract = '0xCF8827f82fdE0B065319186A4BaBE22FF963683c';
-
-// const rpcs = [
-//     'https://rpc.ankr.com/eth',
-//     'https://ethereum.blockpi.network/v1/rpc/public',
-//     'https://eth-mainnet.public.blastapi.io'
-// ];
+const nonoContract = '0xC318675322d9663f3BA846513f08b38EBc9b63F5';
 
 const rpcs = [
-    'https://bsc-dataseed1.ninicoin.io',
-    'https://bsc-dataseed1.binance.org',
-    'https://bsc-dataseed1.defibit.io',
-    'https://rpc.ankr.com/bsc',
-    'https://koge-rpc-bsc.bnb48.club/',
-
-    // 'https://rpc.ankr.com/eth_goerli',
-    // 'https://goerli.gateway.tenderly.co',
+    'https://rpc.ankr.com/eth',
+    'https://ethereum.blockpi.network/v1/rpc/public',
+    'https://eth-mainnet.public.blastapi.io'
 ];
+
+// const rpcs = [
+//     'https://bsc-dataseed1.ninicoin.io',
+//     'https://bsc-dataseed1.binance.org',
+//     'https://bsc-dataseed1.defibit.io',
+//     'https://rpc.ankr.com/bsc',
+//     'https://koge-rpc-bsc.bnb48.club/',
+
+//     // 'https://rpc.ankr.com/eth_goerli',
+//     // 'https://goerli.gateway.tenderly.co',
+// ];
 let idx = 0;
 
 const getProvider = () => {
