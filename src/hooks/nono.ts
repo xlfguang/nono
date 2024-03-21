@@ -1,12 +1,18 @@
 import { ethers } from 'ethers';
 
-const nonoContract = '0xC318675322d9663f3BA846513f08b38EBc9b63F5';
+const nonoContract = '0x9463491528ca076368f398416d161d6438ca11f7';
 
 const rpcs = [
-    'https://rpc.ankr.com/eth',
-    'https://ethereum.blockpi.network/v1/rpc/public',
-    'https://eth-mainnet.public.blastapi.io'
-];
+    'https://developer-access-mainnet.base.org',
+    'https://base.blockpi.network/v1/rpc/public',
+    'https://mainnet.base.org',
+]
+
+// const rpcs = [
+//     'https://rpc.ankr.com/eth',
+//     'https://ethereum.blockpi.network/v1/rpc/public',
+//     'https://eth-mainnet.public.blastapi.io'
+// ];
 
 // const rpcs = [
 //     'https://bsc-dataseed1.ninicoin.io',
