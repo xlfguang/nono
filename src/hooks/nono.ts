@@ -116,8 +116,11 @@ const getBlackAmount = async (): Promise<{amount: ethers.BigNumber }> => {
     var obj:{amount:ethers.BigNumber} = { amount :ethers.BigNumber.from(0)}
     var amountAll = ethers.BigNumber.from(0);
     for (const r of winRecords) {
-        var num = await contract.balanceOf(r.ADDR);
-        amountAll = amountAll.add(num);
+        if(r.TYPE.toString() == "1"){
+            var num = await contract.balanceOf(r.ADDR);
+            amountAll = amountAll.add(num);
+        }
+       
       }
     obj.amount = amountAll;
     return obj;
