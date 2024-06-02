@@ -43,6 +43,7 @@ const Header = () => {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/dashboard">DashBoard</NavLink>
         <NavLink to="/arena">Arena</NavLink>
+        <NavLink to="/dashboard2">DashBoard2</NavLink>
 
         <NavLink to="https://docs.nono.finance/whats-nono/summary">
           WhitePaper
