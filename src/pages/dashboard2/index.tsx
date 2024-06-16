@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   DashboardTowBox,
   DashboardTowLeft,
@@ -26,76 +26,65 @@ import {
   DashboardInfoItemData,
   DashboardInfoItemText,
   DashboardInfoItemTop,
+  DashboardEchartText,
 } from "./style";
 import ReactECharts from "echarts-for-react"; // or var ReactECharts = require('echarts-for-react');
-
+import { getRoundAllData, getLatestRoundNumber } from "@/hooks/nonotow";
+import { Tooltip } from "@douyinfe/semi-ui";
+import { UserContext } from "@/components/userContext";
+// 截取地址的前6位和后4位
+const formatAddress = (address: string) => {
+  return address.slice(0, 6) + "..." + address.slice(-4);
+};
+const getRandomColor = () => {
+  const r = Math.floor(Math.random() * 255);
+  const g = Math.floor(Math.random() * 255);
+  const b = Math.floor(Math.random() * 255);
+  const color = "rgba(" + r + "," + g + "," + b + ")";
+  return color;
+};
 function DashboardTow() {
-  const [players, setPlayers] = React.useState([
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "SneakerCLD",
-      pts: 20,
-      color: "red",
-    },
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "f97102",
-      pts: 10,
-      color: "blue",
-    },
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "SneakerCLD",
-      pts: 25,
-      color: "green",
-    },
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "SneakerCLD",
-      pts: 88,
-      color: "yellow",
-    },
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "SneakerCLD",
-      pts: 20,
-      color: "purple",
-    },
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "SneakerCLD",
-      pts: 15.4,
-      color: "orange",
-    },
-    {
-      header:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
-      name: "SneakerCLD",
-      pts: 21.5,
-      color: "pink",
-    },
-  ]);
-  const [coins, setCoins] = React.useState([
+  const [players, setPlayers] = useState([]);
+  const [coins] = useState([
     {
       name: "ETH",
       icon: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
     },
   ]);
-  const [totalPts, setTotalPts] = React.useState(0);
-  const [coinPrice, setCoinPrice] = React.useState(100);
-  useEffect(() => {
-    let total = 0;
-    players.forEach((player) => {
-      total += player.pts;
+  const { address } = useContext(UserContext) as { address: string };
+  // 轮次编号
+  const [roundNumber, setRoundNumber] = useState(0);
+  const [narkTaxEthAnout, setNarkTaxEthAnout] = useState(0);
+  // 当前地址的排名
+  const [rank, setRank] = useState(0);
+  const [yourEntries, setYourEntries] = useState(0);
+  const [yourWinChance, setYourWinChance] = useState(0);
+  const getData = async () => {
+    const roundNumber = await getLatestRoundNumber();
+    setRoundNumber(roundNumber);
+    getRoundAllData(3).then((res) => {
+      const { addresses, roundData, taxes, eths } = res;
+      const players = addresses.map((address: string, index) => {
+        return {
+          header:
+            "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
+          name: address,
+          taxe: taxes[index],
+          ethNum: eths[index],
+          color: getRandomColor(),
+        };
+      });
+      setPlayers(players);
+      setNarkTaxEthAnout(Number(roundData.buyTaxFeeAmount));
+      const index = addresses.indexOf(address);
+      setYourEntries(taxes[index] || 0);
+      setRank(index + 1);
     });
-    setTotalPts(total);
-  }, [players]);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <DashboardTowBox>
       <DashboardTowLeft>
@@ -105,29 +94,31 @@ function DashboardTow() {
           }}
         >
           <DashboardTowLeftTop>
-            <DashboardTowTitle>7 Players</DashboardTowTitle>
-            <Watching>132 Watching</Watching>
+            <DashboardTowTitle>{players.length} Players</DashboardTowTitle>
+            {/* <Watching>132 Watching</Watching> */}
           </DashboardTowLeftTop>
           <DashboardTowLabelBox>
             {players.map((player, index) => {
               return (
                 <DashboardTowLabelItem key={index} color={player.color}>
-                  <DashboardTowLabelItemHeader src={player.header} />
+                  {/* <DashboardTowLabelItemHeader src={player.header} /> */}
                   <DashboardTowLabelItemContent>
                     <DashboardTowLabelItemData>
-                      <DashboardTowLabelItemName>
-                        {player.name}
-                      </DashboardTowLabelItemName>
+                      <Tooltip content={player.name}>
+                        <DashboardTowLabelItemName>
+                          {formatAddress(player.name)}
+                        </DashboardTowLabelItemName>
+                      </Tooltip>
                       <DashboardTowLabelItemDataPercent>
-                        {((player.pts / totalPts) * 100).toFixed(2)}%
+                        {((player.taxe / narkTaxEthAnout) * 100).toFixed(2)}%
                       </DashboardTowLabelItemDataPercent>
                     </DashboardTowLabelItemData>
                     <DashboardTowLabelItemData>
                       <DashboardTowLabelItemPts>
-                        {player.pts} Pts
+                        {(player.taxe * 1).toFixed(2)} NONO
                       </DashboardTowLabelItemPts>
                       <DashboardTowLabelItemDataCoin>
-                        {(player.pts * coinPrice).toFixed(2)} Nono
+                        {player.ethNum} ETH
                       </DashboardTowLabelItemDataCoin>
                     </DashboardTowLabelItemData>
                   </DashboardTowLabelItemContent>
@@ -168,7 +159,7 @@ function DashboardTow() {
                     data:
                       players.map((player) => {
                         return {
-                          value: player.pts,
+                          value: player.taxe,
                           name: player.name,
                           itemStyle: {
                             color: player.color,
@@ -179,6 +170,18 @@ function DashboardTow() {
                 ],
               }}
             />
+            <DashboardEchartText>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg"
+                alt=""
+              />
+              <span>
+                {players.reduce((prev, curr) => {
+                  return prev + Number(curr.ethNum);
+                }, 0)}{" "}
+                ETH
+              </span>
+            </DashboardEchartText>
           </DashboardEchart>
         </Card>
         <Card
@@ -204,25 +207,29 @@ function DashboardTow() {
             height: "200px",
           }}
         >
-          <DashboardTowTitle>Round 61567</DashboardTowTitle>
+          <DashboardTowTitle>Round {roundNumber}</DashboardTowTitle>
           <DashboardInfo>
             <DashboardInfoItem>
               <DashboardInfoItemData>
-                <DashboardInfoItemTop>1.06</DashboardInfoItemTop>
+                <DashboardInfoItemTop>
+                  {narkTaxEthAnout?.toFixed(2)}
+                </DashboardInfoItemTop>
                 <DashboardInfoItemText>Prize Pool</DashboardInfoItemText>
               </DashboardInfoItemData>
               <DashboardInfoItemData>
-                <DashboardInfoItemTop>7/500</DashboardInfoItemTop>
+                <DashboardInfoItemTop>
+                  {rank}/{players.length}
+                </DashboardInfoItemTop>
                 <DashboardInfoItemText>Players</DashboardInfoItemText>
               </DashboardInfoItemData>
             </DashboardInfoItem>
             <DashboardInfoItem>
               <DashboardInfoItemData>
-                <DashboardInfoItemTop>1.06</DashboardInfoItemTop>
+                <DashboardInfoItemTop>{yourEntries}</DashboardInfoItemTop>
                 <DashboardInfoItemText>Your Entries</DashboardInfoItemText>
               </DashboardInfoItemData>
               <DashboardInfoItemData>
-                <DashboardInfoItemTop>1.06</DashboardInfoItemTop>
+                <DashboardInfoItemTop>{yourWinChance}</DashboardInfoItemTop>
                 <DashboardInfoItemText>Your Win Chance</DashboardInfoItemText>
               </DashboardInfoItemData>
             </DashboardInfoItem>

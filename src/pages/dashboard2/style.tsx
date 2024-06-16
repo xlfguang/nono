@@ -113,6 +113,7 @@ export const DashboardEchart = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 export const CoinBox = styled.div`
   display: flex;
@@ -160,4 +161,23 @@ export const Line = styled.div`
   height: 1px;
   background-color: #333;
   margin: 10px 0;
+`;
+export const DashboardEchartText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  span {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 600;
+  }
 `;

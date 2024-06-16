@@ -3,6 +3,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import nono from "@/assets/img/no-no.webp";
+import WalletBox from "./walletBox";
 
 // Styled components
 const HeaderWrapper = styled.header`
@@ -20,6 +21,7 @@ const HeaderWrapper = styled.header`
 const Nav = styled.nav`
   display: flex;
   justify-content: end;
+  align-items: center;
 `;
 
 const NavLink = styled(Link)`
@@ -44,10 +46,10 @@ const Header = () => {
         <NavLink to="/dashboard">DashBoard</NavLink>
         <NavLink to="/arena">Arena</NavLink>
         <NavLink to="/dashboard2">DashBoard2</NavLink>
-
         <NavLink to="https://docs.nono.finance/whats-nono/summary">
           WhitePaper
         </NavLink>
+        <WalletBox></WalletBox>
       </Nav>
     </HeaderWrapper>
   );
