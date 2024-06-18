@@ -117,7 +117,6 @@ export const DashboardEchart = styled.div`
 `;
 export const CoinBox = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-top: 20px;
 `;
 
@@ -129,12 +128,10 @@ export const CoinCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    width: 90px;
-    height: 90px;
-    background-color: #fff;
-    border-radius: 50%;
-  }
+  margin-right: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 20px;
 `;
 export const Countdown = styled.div`
   border: 2px solid red;
