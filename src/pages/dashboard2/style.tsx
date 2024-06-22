@@ -120,7 +120,9 @@ export const CoinBox = styled.div`
   margin-top: 20px;
 `;
 
-export const CoinCard = styled.div`
+export const CoinCard = styled.div<{
+  active: boolean;
+}>`
   width: 160px;
   height: 160px;
   border-radius: 10px;
@@ -132,6 +134,7 @@ export const CoinCard = styled.div`
   cursor: pointer;
   color: #fff;
   font-size: 20px;
+  border: ${(props) => (props.active ? "2px solid red" : "none")};
 `;
 export const Countdown = styled.div`
   border: 2px solid red;
