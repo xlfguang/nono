@@ -46,7 +46,8 @@ const getRandomColor = () => {
 function DashboardTow() {
   const [players, setPlayers] = useState([]);
 
-  const { address } = useContext(UserContext) as { address: string };
+  // const { address } = useContext(UserContext) as { address: string };
+  const address = "0x2C41a4a26C4D58a0A9e033bD96D879B25884Ce13";
   // 当前轮次编号
   const [roundNumber, setRoundNumber] = useState(0);
   const roundListRef = useRef<number[]>([]);
@@ -55,7 +56,7 @@ function DashboardTow() {
   const [narkTaxEthAnout, setNarkTaxEthAnout] = useState(0);
   // 当前地址的排名
   const [rank, setRank] = useState(0);
-  const [yourEntries, setYourEntries] = useState(0);
+  const [yourEntries, setYourEntries] = useState<number | string>(0);
   const [yourWinChance, setYourWinChance] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const getRound = async () => {
@@ -101,7 +102,7 @@ function DashboardTow() {
           setPlayers(newplayers);
           setNarkTaxEthAnout(Number(roundData.buyTaxFeeAmount));
           const index = addresses.indexOf(address);
-          setYourEntries(taxes[index] || 0);
+          setYourEntries(Number(taxes[index]).toFixed(2) || 0);
           setRank(index + 1);
           console.log("数据更新");
         } else {
@@ -109,7 +110,10 @@ function DashboardTow() {
         }
         setSpinning(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
+
+        console.log("数据获取失败");
         setSpinning(false);
       });
   };
