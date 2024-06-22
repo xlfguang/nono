@@ -46,8 +46,8 @@ const getRandomColor = () => {
 function DashboardTow() {
   const [players, setPlayers] = useState([]);
 
-  // const { address } = useContext(UserContext) as { address: string };
-  const address = "0x2C41a4a26C4D58a0A9e033bD96D879B25884Ce13";
+  const { address } = useContext(UserContext) as { address: string };
+  // const address = "0x2C41a4a26C4D58a0A9e033bD96D879B25884Ce13";
   // 当前轮次编号
   const [roundNumber, setRoundNumber] = useState(0);
   const roundListRef = useRef<number[]>([]);
