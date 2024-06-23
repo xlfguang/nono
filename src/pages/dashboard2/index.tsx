@@ -61,16 +61,11 @@ function DashboardTow() {
   const [spinning, setSpinning] = useState(false);
   const getRound = async () => {
     const newroundNumber = await getLatestRoundNumber();
-    console.log(newroundNumber);
-    console.log("roundList.length", roundList.length);
-    console.log("roundListRef.current", roundListRef.current.length);
-
     if (newroundNumber == roundListRef.current.length) {
       console.log("没有更多轮次更新");
       return;
     } else {
       console.log("有更多轮次更新");
-
       setRoundNumber(newroundNumber);
       roundListRef.current = Array.from({ length: newroundNumber }).map(
         (_, i) => i + 1
@@ -191,6 +186,10 @@ function DashboardTow() {
                   width: "100%",
                 }}
                 option={{
+                  tooltip: {
+                    trigger: "item", // 设置提示框的触发方式为数据项触发
+                    formatter: "{b}<br/> {c}<br/> ({d}%)", // 提示框内容，显示名称、数值和百分比
+                  },
                   series: [
                     {
                       name: "Access From",
@@ -198,7 +197,7 @@ function DashboardTow() {
                       radius: ["50%", "90%"],
                       avoidLabelOverlap: false,
                       label: {
-                        show: true,
+                        show: false,
                         formatter: "{d}%",
                       },
                       labelLine: {
