@@ -117,19 +117,20 @@ const getRoundAllData = async (roundNumber) => {
   const data = await contract.getRoundAllData(roundNumber);
   console.log(data);
 
-  const buyTaxFeeAmount = new BigNumber(data[0][3]._hex);
+  const buyTaxFeeAmount = new BigNumber(data[0].buyTaxFeeAmount._hex);
   let buyTaxFeeAmountNumber = buyTaxFeeAmount.toFixed()
   buyTaxFeeAmountNumber = ethers.utils.formatEther(buyTaxFeeAmountNumber)
   return {
     roundData: {
-      startBlockNumber: data[0][0].toNumber(),
-      endBlockNumber: data[0][1].toNumber(),
-      roundNumber: data[0][2].toNumber(),
+      buySumEthAmount: ethers.utils.formatEther(data[0].buySumEthAmount.toNumber()),
+      startBlockNumber: data[0].startBlockNumber.toNumber(),
+      endBlockNumber: data[0].endBlockNumber.toNumber(),
+      roundNumber: data[0].roundNumber.toNumber(),
       buyTaxFeeAmount: buyTaxFeeAmountNumber,
-      markTaxEthAmount: ethers.utils.formatEther(data[0][4].toNumber()),
-      buyTaxEthAmount: data[0][5].toNumber(),
-      sellTaxEthAmount: data[0][6].toNumber(),
-      winningAddress: data[0][7],
+      markTaxEthAmount: ethers.utils.formatEther(data[0].markTaxEthAmount.toNumber()),
+      buyTaxEthAmount: ethers.utils.formatEther(data[0].buyTaxEthAmount.toNumber()),
+      sellTaxEthAmount: ethers.utils.formatEther(data[0].sellTaxEthAmount.toNumber()),
+      winningAddress: data[0].winningAddress,
     },
     addresses: data[1],
     taxes: data[2].map((item) => {

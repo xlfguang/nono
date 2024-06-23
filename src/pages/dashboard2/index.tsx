@@ -57,8 +57,10 @@ function DashboardTow() {
   // 当前地址的排名
   const [rank, setRank] = useState(0);
   const [yourEntries, setYourEntries] = useState<number | string>(0);
-  const [yourWinChance, setYourWinChance] = useState(0);
+  const [yourWinChance, setYourWinChance] = useState<number | string>(0);
+
   const [spinning, setSpinning] = useState(false);
+  const [roundData, setRoundData] = useState({} as any);
   const getRound = async () => {
     const newroundNumber = await getLatestRoundNumber();
     if (newroundNumber == roundListRef.current.length) {
@@ -77,7 +79,9 @@ function DashboardTow() {
     setSpinning(true);
     getRoundAllData(roundNumber)
       .then((res) => {
+        console.log(res);
         const { addresses, roundData, taxes, eths } = res;
+        setRoundData(roundData);
         const newplayers = addresses.map((address: string, index) => {
           return {
             header:
@@ -97,7 +101,16 @@ function DashboardTow() {
           setPlayers(newplayers);
           setNarkTaxEthAnout(Number(roundData.buyTaxFeeAmount));
           const index = addresses.indexOf(address);
-          setYourEntries(Number(taxes[index]).toFixed(2) || 0);
+          setYourEntries(index === -1 ? 0 : Number(taxes[index]).toFixed(2));
+
+          setYourWinChance(
+            index === -1
+              ? "0 %"
+              : `${(
+                  (taxes[index] / Number(roundData.buyTaxFeeAmount)) *
+                  100
+                ).toFixed(2)} %`
+          );
           setRank(index + 1);
           console.log("数据更新");
         } else {
@@ -148,7 +161,7 @@ function DashboardTow() {
                     {/* <DashboardTowLabelItemHeader src={player.header} /> */}
                     <DashboardTowLabelItemContent>
                       <DashboardTowLabelItemData>
-                        <Tooltip content={player.name}>
+                        <Tooltip content={player.name} position="right">
                           <DashboardTowLabelItemName>
                             {formatAddress(player.name)}
                           </DashboardTowLabelItemName>
@@ -158,12 +171,17 @@ function DashboardTow() {
                         </DashboardTowLabelItemDataPercent>
                       </DashboardTowLabelItemData>
                       <DashboardTowLabelItemData>
-                        <DashboardTowLabelItemPts>
-                          {(player.taxe * 1).toFixed(2)} NONO
-                        </DashboardTowLabelItemPts>
-                        <DashboardTowLabelItemDataCoin>
-                          {player.ethNum} ETH
-                        </DashboardTowLabelItemDataCoin>
+                        <Tooltip content={` ${player.taxe}`} position="right">
+                          <DashboardTowLabelItemPts>
+                            {(player.taxe * 1).toFixed(2)} NONO
+                          </DashboardTowLabelItemPts>
+                        </Tooltip>
+
+                        <Tooltip content={player.ethNum} position="right">
+                          <DashboardTowLabelItemDataCoin>
+                            {player.ethNum} ETH
+                          </DashboardTowLabelItemDataCoin>
+                        </Tooltip>
                       </DashboardTowLabelItemData>
                     </DashboardTowLabelItemContent>
                   </DashboardTowLabelItem>
@@ -223,12 +241,22 @@ function DashboardTow() {
                   src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg"
                   alt=""
                 />
-                <span>
-                  {players.reduce((prev, curr) => {
-                    return prev + Number(curr.ethNum);
-                  }, 0)}{" "}
-                  ETH
-                </span>
+                <Tooltip
+                  content={
+                    Number(roundData.buyTaxEthAmount) +
+                    Number(roundData.sellTaxEthAmount)
+                  }
+                >
+                  <span>
+                    {parseFloat(
+                      (
+                        Number(roundData.buyTaxEthAmount) +
+                        Number(roundData.sellTaxEthAmount)
+                      ).toFixed(3)
+                    )}{" "}
+                    ETH
+                  </span>
+                </Tooltip>
               </DashboardEchartText>
             </DashboardEchart>
           </Card>
@@ -292,10 +320,12 @@ function DashboardTow() {
             <DashboardInfo>
               <DashboardInfoItem>
                 <DashboardInfoItemData>
-                  <DashboardInfoItemTop>-</DashboardInfoItemTop>
-                  <DashboardInfoItemText>
-                    Your Future Entries
-                  </DashboardInfoItemText>
+                  <DashboardInfoItemTop>
+                    {roundData.winningAddress
+                      ? formatAddress(roundData.winningAddress)
+                      : "-"}
+                  </DashboardInfoItemTop>
+                  <DashboardInfoItemText>Winning Address</DashboardInfoItemText>
                 </DashboardInfoItemData>
                 <DashboardInfoItemData>
                   <DashboardInfoItemTop>-</DashboardInfoItemTop>
