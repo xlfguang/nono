@@ -251,7 +251,7 @@ function DashboardTow() {
                       (
                         Number(roundData.buyTaxEthAmount) +
                         Number(roundData.sellTaxEthAmount)
-                      ).toFixed(3)
+                      ).toFixed(4)
                     )}{" "}
                     ETH
                   </span>
