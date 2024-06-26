@@ -10,6 +10,13 @@ export const Card = styled.div`
   &:hover {
     border: 1px solid red;
   }
+  /* scrollbar 样式 */
+
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
 `;
 export const DashboardTowBox = styled.div`
   display: flex;

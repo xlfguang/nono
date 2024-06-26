@@ -232,6 +232,7 @@ function DashboardTow() {
           <Card
             style={{
               height: "100%",
+              overflow: "auto",
             }}
           >
             <DashboardTowLeftTop>
