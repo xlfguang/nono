@@ -50,7 +50,10 @@ function DashboardTow() {
 
   const [players, setPlayers] = useState([]);
   // 当前轮次编号
-  const [roundNumber, setRoundNumber] = useState(0);
+  const roundNumberRef = useRef(0);
+  const [roundNumber, setRoundNumber] = useState(
+    roundNumberRef.current as number
+  );
   const roundListRef = useRef<number[]>([]);
   // 总轮次列表
   const [roundList, setRoundList] = useState<number[]>(roundListRef.current);
@@ -107,7 +110,8 @@ function DashboardTow() {
     try {
       setSpinning(true);
       const newRoundNumber = await getRound();
-      setRoundNumber(newRoundNumber);
+      roundNumberRef.current = newRoundNumber;
+      setRoundNumber(roundNumberRef.current);
       roundListRef.current = Array.from({ length: newRoundNumber }).map(
         (_, i) => i + 1
       );
@@ -132,7 +136,6 @@ function DashboardTow() {
     // 修改 chartDomRef.current的类名
     if (chartDomRef.current) {
       const dom = chartDomRef.current.getEchartsInstance()._dom;
-
       dom.style.transition = "transform 3s";
       dom.style.transform = "rotate(3600deg)";
       setTimeout(() => {
@@ -147,9 +150,9 @@ function DashboardTow() {
     const newRoundNumber = await getRound();
     console.log(newRoundNumber);
     console.log(roundListRef.current.length);
-
+    console.log(roundNumberRef.current);
     // 如果当前处于最新一轮
-    if (roundListRef.current.length === roundNumber) {
+    if (roundListRef.current.length === roundNumberRef.current) {
       try {
         const res = await getData(roundNumber);
         console.log(res);
@@ -422,7 +425,8 @@ function DashboardTow() {
                     onClick={async () => {
                       try {
                         setSpinning(true);
-                        setRoundNumber(item);
+                        roundNumberRef.current = item;
+                        setRoundNumber(roundNumberRef.current as number);
                         const res = await getData(item);
                         setRoundData(res.roundData);
                         setPlayers(res.newplayers);
