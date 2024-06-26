@@ -1,7 +1,6 @@
-import { ethers, Contract } from 'ethers';
+import { ethers, Contract, BigNumber } from 'ethers';
 import abi from "@/abi/lottery.json"
 const nonoContract = '0xE1F44755bF4B9a5f930321F859E02789E0321ead';
-import BigNumber from 'bignumber.js';
 
 const rpcs = [
   'https://bsc-dataseed1.ninicoin.io',
@@ -117,33 +116,42 @@ const getRoundAllData = async (roundNumber) => {
   const data = await contract.getRoundAllData(roundNumber);
   console.log(data);
 
-  const buyTaxFeeAmount = new BigNumber(data[0].buyTaxFeeAmount._hex);
-  let buyTaxFeeAmountNumber = buyTaxFeeAmount.toFixed()
-  buyTaxFeeAmountNumber = ethers.utils.formatEther(buyTaxFeeAmountNumber)
+
+
+  const checkIsBigNumber = (
+    value: {
+      _hex: string;
+      _isBigNumber: boolean;
+    }
+  ) => {
+    if (value._isBigNumber) {
+      return BigNumber.from(value._hex)
+    } else {
+      return value._hex
+    }
+  }
   return {
     roundData: {
-      buySumEthAmount: ethers.utils.formatEther(data[0].buySumEthAmount.toNumber()),
+      buySumEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].buySumEthAmount)),
       startBlockNumber: data[0].startBlockNumber.toNumber(),
       endBlockNumber: data[0].endBlockNumber.toNumber(),
       roundNumber: data[0].roundNumber.toNumber(),
-      buyTaxFeeAmount: buyTaxFeeAmountNumber,
-      markTaxEthAmount: ethers.utils.formatEther(data[0].markTaxEthAmount.toNumber()),
-      buyTaxEthAmount: ethers.utils.formatEther(data[0].buyTaxEthAmount.toNumber()),
-      sellTaxEthAmount: ethers.utils.formatEther(data[0].sellTaxEthAmount.toNumber()),
+      buyTaxFeeAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].buyTaxFeeAmount)),
+      markTaxEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].markTaxEthAmount)),
+      buyTaxEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].buyTaxEthAmount)),
+      sellTaxEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].sellTaxEthAmount)),
       winningAddress: data[0].winningAddress,
     },
     addresses: data[1],
     taxes: data[2].map((item) => {
-      const wei = item.toString()
-      return ethers.utils.formatEther(wei)
-    }
-    ),
-    eths: data[3].map((item) => {
-      const wei = item.toString()
-      return ethers.utils.formatEther(wei)
-
+      return ethers.utils.formatEther(checkIsBigNumber(item))
     }),
-  };
+    eths: data[3].map((item) => {
+      return ethers.utils.formatEther(checkIsBigNumber(item))
+    }),
+
+  }
+
 };
 
 export {

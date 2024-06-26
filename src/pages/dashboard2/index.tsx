@@ -120,7 +120,6 @@ function DashboardTow() {
       })
       .catch((e) => {
         console.log(e);
-
         console.log("数据获取失败");
         setSpinning(false);
       });
