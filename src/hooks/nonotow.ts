@@ -114,10 +114,6 @@ const getRoundParticipatorData = async (roundNumber) => {
 const getRoundAllData = async (roundNumber) => {
   const contract = new ethers.Contract(nonoContract, abi, getProvider());
   const data = await contract.getRoundAllData(roundNumber);
-  console.log(data);
-
-
-
   const checkIsBigNumber = (
     value: {
       _hex: string;

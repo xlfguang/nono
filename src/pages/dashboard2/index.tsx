@@ -153,7 +153,6 @@ function DashboardTow() {
       try {
         const res = await getData(roundNumber);
         console.log(res);
-
         // 如果有胜利者
         if (res.roundData.winningAddress) {
           const winningPlayer = res.newplayers.find(
@@ -220,7 +219,7 @@ function DashboardTow() {
     initData();
     const timer = setInterval(() => {
       handleDataChange();
-    }, 10000);
+    }, 3000);
     return () => {
       clearInterval(timer);
     };
