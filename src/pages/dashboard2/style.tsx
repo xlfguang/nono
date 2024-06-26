@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import winningAddress from "@/assets/img/winningAddress.svg";
 
 export const Card = styled.div`
   padding: 20px 10px;
@@ -171,7 +172,7 @@ export const DashboardEchartText = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  img {
+  .eth-img {
     width: 100px;
     height: 100px;
   }
@@ -179,5 +180,18 @@ export const DashboardEchartText = styled.div`
     color: #fff;
     font-size: 36px;
     font-weight: 600;
+  }
+`;
+export const WinningAddressBox = styled.div`
+  width: 100px;
+  height: 100px;
+  background: url(${winningAddress}) no-repeat;
+  background-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .winningAddress-img {
+    width: 60px;
+    height: 60px;
   }
 `;

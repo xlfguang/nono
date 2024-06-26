@@ -140,7 +140,7 @@ const getRoundAllData = async (roundNumber) => {
       markTaxEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].markTaxEthAmount)),
       buyTaxEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].buyTaxEthAmount)),
       sellTaxEthAmount: ethers.utils.formatEther(checkIsBigNumber(data[0].sellTaxEthAmount)),
-      winningAddress: data[0].winningAddress,
+      winningAddress: data[0].winningAddress === '0x0000000000000000000000000000000000000000' ? '' : data[0].winningAddress
     },
     addresses: data[1],
     taxes: data[2].map((item) => {
