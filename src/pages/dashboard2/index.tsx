@@ -46,6 +46,8 @@ function DashboardTow() {
   const { address } = useContext(UserContext) as { address: string };
   const chartRef = useRef(null); // 用于保存图表实例
   const chartDomRef = useRef(null);
+  const previousPlayersRef = useRef([]);
+
   const [players, setPlayers] = useState([]);
   // 当前轮次编号
   const [roundNumber, setRoundNumber] = useState(0);
@@ -102,21 +104,28 @@ function DashboardTow() {
 
   // 数据初始化
   const initData = async () => {
-    setSpinning(true);
-    const newroundNumber = await getRound();
-    setRoundNumber(newroundNumber);
-    roundListRef.current = Array.from({ length: newroundNumber }).map(
-      (_, i) => i + 1
-    );
-    setRoundList(roundListRef.current);
-    const res = await getData(roundNumber);
-    setRoundData(res.roundData);
-    setPlayers(res.newplayers);
-    setNarkTaxEthAnout(res.narkTaxEthAnout);
-    setYourEntries(res.yourEntries);
-    setYourWinChance(res.yourWinChance);
-    setRank(res.rank);
-    setSpinning(false);
+    try {
+      setSpinning(true);
+      const newRoundNumber = await getRound();
+      setRoundNumber(newRoundNumber);
+      roundListRef.current = Array.from({ length: newRoundNumber }).map(
+        (_, i) => i + 1
+      );
+      setRoundList(roundListRef.current);
+      const res = await getData(newRoundNumber);
+      setRoundData(res.roundData);
+      setPlayers(res.newplayers);
+      previousPlayersRef.current = res.newplayers; // 保存当前玩家列表
+      setNarkTaxEthAnout(res.narkTaxEthAnout);
+      setYourEntries(res.yourEntries);
+      setYourWinChance(res.yourWinChance);
+      setRank(res.rank);
+      setSpinning(false);
+    } catch (e) {
+      console.log(e);
+      initData();
+      setSpinning(false);
+    }
   };
   // 中奖动画 series的第一个扇形图旋转三秒 也就是修改 startAngle
   const handleWinningAnimation = () => {
@@ -134,47 +143,55 @@ function DashboardTow() {
   };
   // 监听数据变化
   const handleDataChange = async () => {
-    const newroundNumber = await getRound();
+    console.log("handleDataChange");
+    const newRoundNumber = await getRound();
+    console.log(newRoundNumber);
+    console.log(roundListRef.current.length);
+
     // 如果当前处于最新一轮
     if (roundListRef.current.length === roundNumber) {
-      const res = await getData(roundNumber);
-      // 如果有胜利者
-      if (res.roundData.winningAddress) {
-        // 把中奖者排列在第一位
-        const winningPlayer = res.newplayers.find(
-          (player) => player.name === res.roundData.winningAddress
-        );
-        const newplayers = res.newplayers.filter(
-          (player) => player.name !== res.roundData.winningAddress
-        );
-        setPlayers([winningPlayer, ...newplayers]);
-        // 触发中奖动画
-        handleWinningAnimation();
+      try {
+        const res = await getData(roundNumber);
+        console.log(res);
 
-        // 三秒后刷新数据
-        setTimeout(() => {
-          initData();
-        }, 4000);
-      } else {
-        // 如果没有胜利者 只需要更新数据即可
-        const newplayers = res.newplayers;
-        // 检查是否有新的玩家加入
-        const newPlayers = newplayers.filter((newPlayer) => {
-          return !players.some((player) => player.name === newPlayer.name);
-        });
-        // 如果有新的玩家加入
-        if (newPlayers.length > 0) {
-          setPlayers([...players, ...newPlayers]);
+        // 如果有胜利者
+        if (res.roundData.winningAddress) {
+          const winningPlayer = res.newplayers.find(
+            (player) => player.name === res.roundData.winningAddress
+          );
+          const newPlayers = res.newplayers.filter(
+            (player) => player.name !== res.roundData.winningAddress
+          );
+          setPlayers([winningPlayer, ...newPlayers]);
+          handleWinningAnimation();
+
+          setTimeout(() => {
+            initData();
+          }, 4000);
+        } else {
+          // 检查是否有新的玩家加入
+          const newPlayers = res.newplayers.filter((newPlayer) => {
+            return !previousPlayersRef.current.some(
+              (player) => player.name === newPlayer.name
+            );
+          });
+
+          if (newPlayers.length > 0) {
+            setPlayers([...res.newplayers]);
+          }
+          previousPlayersRef.current = res.newplayers; // 更新前一次的玩家列表
+
+          setRoundData(res.roundData);
+          setNarkTaxEthAnout(res.narkTaxEthAnout);
+          setYourEntries(res.yourEntries);
+          setYourWinChance(res.yourWinChance);
+          setRank(res.rank);
         }
-        setRoundData(res.roundData);
-        setNarkTaxEthAnout(res.narkTaxEthAnout);
-        setYourEntries(res.yourEntries);
-        setYourWinChance(res.yourWinChance);
-        setRank(res.rank);
+      } catch (e) {
+        console.log(e);
       }
     } else {
-      // 如果当前不是最新一轮 只更新轮次列表
-      roundListRef.current = Array.from({ length: newroundNumber }).map(
+      roundListRef.current = Array.from({ length: newRoundNumber }).map(
         (_, i) => i + 1
       );
       setRoundList(roundListRef.current);
@@ -203,7 +220,7 @@ function DashboardTow() {
     initData();
     const timer = setInterval(() => {
       handleDataChange();
-    }, 5000);
+    }, 10000);
     return () => {
       clearInterval(timer);
     };
