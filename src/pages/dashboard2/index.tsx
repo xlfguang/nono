@@ -47,7 +47,9 @@ function DashboardTow() {
   const chartRef = useRef(null); // 用于保存图表实例
   const chartDomRef = useRef(null);
   const previousPlayersRef = useRef([]);
-
+  const timeRef = useRef<NodeJS.Timeout | null>(null);
+  // 倒计时时间
+  const downTimeRef = useRef(3);
   const [players, setPlayers] = useState([]);
   // 当前轮次编号
   const roundNumberRef = useRef(0);
@@ -146,15 +148,21 @@ function DashboardTow() {
   };
   // 监听数据变化
   const handleDataChange = async () => {
-    console.log("handleDataChange");
+    downTimeRef.current = 3;
+    console.log("数据变化");
     const newRoundNumber = await getRound();
-    console.log(newRoundNumber);
-    console.log(roundListRef.current.length);
-    console.log(roundNumberRef.current);
+    if (spinning) {
+      return;
+    }
     // 如果当前处于最新一轮
     if (roundListRef.current.length === roundNumberRef.current) {
+      console.log("当前处于最新一轮");
+
       try {
-        const res = await getData(roundNumber);
+        const res = await getData(roundNumberRef.current);
+        if (spinning) {
+          return;
+        }
         console.log(res);
         // 如果有胜利者
         if (res.roundData.winningAddress) {
@@ -217,14 +225,32 @@ function DashboardTow() {
       });
     }
   };
+  // 关闭定时器
+  const clearTimer = () => {
+    if (timeRef.current) {
+      clearInterval(timeRef.current as NodeJS.Timeout);
+      timeRef.current = null;
+      downTimeRef.current = 3;
+    }
+  };
+  // 重置定时器
+  const resetTimer = () => {
+    clearTimer();
+    timeRef.current = setInterval(async () => {
+      console.log("downTimeRef.current", downTimeRef.current);
+      if (downTimeRef.current === 0) {
+        await handleDataChange();
+      } else {
+        downTimeRef.current--;
+      }
+    }, 1000);
+  };
 
   useEffect(() => {
     initData();
-    const timer = setInterval(() => {
-      handleDataChange();
-    }, 3000);
+    resetTimer();
     return () => {
-      clearInterval(timer);
+      clearTimer();
     };
   }, [address]);
 
@@ -423,6 +449,8 @@ function DashboardTow() {
                     key={item}
                     active={item === roundNumber}
                     onClick={async () => {
+                      clearTimer();
+
                       try {
                         setSpinning(true);
                         roundNumberRef.current = item;
@@ -435,9 +463,11 @@ function DashboardTow() {
                         setYourWinChance(res.yourWinChance);
                         setRank(res.rank);
                         setSpinning(false);
+                        resetTimer();
                       } catch (e) {
                         console.log(e);
                         setSpinning(false);
+                        resetTimer();
                       }
                     }}
                   >
