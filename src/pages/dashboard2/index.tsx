@@ -26,6 +26,7 @@ import {
   DashboardInfoItemTop,
   DashboardEchartText,
   WinningAddressBox,
+  CoinScroll,
 } from "./style";
 import ReactECharts from "echarts-for-react"; // or var ReactECharts = require('echarts-for-react');
 import { getRoundAllData, getLatestRoundNumber } from "@/hooks/nonotow";
@@ -180,9 +181,11 @@ function DashboardTow() {
           }, 4000);
         } else {
           // 检查是否有新的玩家加入
+          // 检查name 和 taxe 是否相同
           const newPlayers = res.newplayers.filter((newPlayer) => {
             return !previousPlayersRef.current.some(
-              (player) => player.name === newPlayer.name
+              (player) =>
+                player.name === newPlayer.name && player.taxe === newPlayer.taxe
             );
           });
 
@@ -413,17 +416,7 @@ function DashboardTow() {
                   </>
                 ) : (
                   <>
-                    <WinningAddressBox>
-                      {
-                        <>
-                          <img
-                            className="winningAddress-img"
-                            src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg"
-                            alt=""
-                          />
-                        </>
-                      }
-                    </WinningAddressBox>
+                    <WinningAddressBox>{<></>}</WinningAddressBox>
                     <Tooltip content={roundData.winningAddress}>
                       <span>
                         {roundData.winningAddress
@@ -442,40 +435,42 @@ function DashboardTow() {
             }}
           >
             <DashboardTowTitle>Round Content</DashboardTowTitle>
-            <CoinBox>
-              {roundList.map((item) => {
-                return (
-                  <CoinCard
-                    key={item}
-                    active={item === roundNumber}
-                    onClick={async () => {
-                      clearTimer();
+            <CoinScroll>
+              <CoinBox>
+                {roundList.map((item) => {
+                  return (
+                    <CoinCard
+                      key={item}
+                      active={item === roundNumber}
+                      onClick={async () => {
+                        clearTimer();
 
-                      try {
-                        setSpinning(true);
-                        roundNumberRef.current = item;
-                        setRoundNumber(roundNumberRef.current as number);
-                        const res = await getData(item);
-                        setRoundData(res.roundData);
-                        setPlayers(res.newplayers);
-                        setNarkTaxEthAnout(res.narkTaxEthAnout);
-                        setYourEntries(res.yourEntries);
-                        setYourWinChance(res.yourWinChance);
-                        setRank(res.rank);
-                        setSpinning(false);
-                        resetTimer();
-                      } catch (e) {
-                        console.log(e);
-                        setSpinning(false);
-                        resetTimer();
-                      }
-                    }}
-                  >
-                    Round {item}
-                  </CoinCard>
-                );
-              })}
-            </CoinBox>
+                        try {
+                          setSpinning(true);
+                          roundNumberRef.current = item;
+                          setRoundNumber(roundNumberRef.current as number);
+                          const res = await getData(item);
+                          setRoundData(res.roundData);
+                          setPlayers(res.newplayers);
+                          setNarkTaxEthAnout(res.narkTaxEthAnout);
+                          setYourEntries(res.yourEntries);
+                          setYourWinChance(res.yourWinChance);
+                          setRank(res.rank);
+                          setSpinning(false);
+                          resetTimer();
+                        } catch (e) {
+                          console.log(e);
+                          setSpinning(false);
+                          resetTimer();
+                        }
+                      }}
+                    >
+                      Round {item}
+                    </CoinCard>
+                  );
+                })}
+              </CoinBox>
+            </CoinScroll>
           </Card>
         </DashboardTowContent>
         <DashboardTowRight>

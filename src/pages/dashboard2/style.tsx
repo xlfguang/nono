@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import winningAddress from "@/assets/img/winningAddress.svg";
+import winningAddress from "@/assets/img/no-no.webp";
 
 export const Card = styled.div`
   padding: 20px 10px;
@@ -123,9 +123,21 @@ export const DashboardEchart = styled.div`
   justify-content: center;
   position: relative;
 `;
+export const CoinScroll = styled.div`
+  overflow: auto;
+  width: 100%;
+  /* 样式 */
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+`;
 export const CoinBox = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   margin-top: 20px;
+  min-width: 800px;
 `;
 
 export const CoinCard = styled.div<{
@@ -197,6 +209,7 @@ export const WinningAddressBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
   .winningAddress-img {
     width: 60px;
     height: 60px;
