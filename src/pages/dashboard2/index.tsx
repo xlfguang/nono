@@ -416,7 +416,7 @@ function DashboardTow() {
                   </>
                 ) : (
                   <>
-                    <WinningAddressBox>{<></>}</WinningAddressBox>
+                    <WinningAddressBox>{}</WinningAddressBox>
                     <Tooltip content={roundData.winningAddress}>
                       <span>
                         {roundData.winningAddress
