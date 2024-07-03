@@ -145,13 +145,13 @@ function DashboardTow() {
     if (chartDomRef.current) {
       setIsWinning(true);
       const dom = chartDomRef.current.getEchartsInstance()._dom;
-      dom.style.transition = "transform 3s";
+      dom.style.transition = "transform 6s";
       dom.style.transform = "rotate(3600deg)";
       setTimeout(() => {
         setIsWinning(false);
         dom.style.transition = "transform 0s";
         dom.style.transform = "rotate(0deg)";
-      }, 3000);
+      }, 6000);
     }
   };
   // 监听数据变化
@@ -174,18 +174,18 @@ function DashboardTow() {
         // 如果有胜利者
         if (res.roundData.winningAddress) {
           clearTimer();
-          const winningPlayer = res.newplayers.find(
-            (player) => player.name === res.roundData.winningAddress
-          );
-          const newPlayers = res.newplayers.filter(
-            (player) => player.name !== res.roundData.winningAddress
-          );
-          setPlayers([winningPlayer, ...newPlayers]);
+          setPlayers([...res.newplayers]);
+          previousPlayersRef.current = res.newplayers;
+          setRoundData(res.roundData);
+          setNarkTaxEthAnout(res.narkTaxEthAnout);
+          setYourEntries(res.yourEntries);
+          setYourWinChance(res.yourWinChance);
+          setRank(res.rank);
           handleWinningAnimation();
           setTimeout(() => {
             initData();
             resetTimer();
-          }, 4000);
+          }, 7000);
         } else {
           // 检查是否有新的玩家加入
           // 检查name 和 taxe 是否相同
@@ -266,13 +266,24 @@ function DashboardTow() {
 
   useEffect(() => {
     if (roundData.winningAddress) {
-      const maxPlayer = players[0];
-      console.log(maxPlayer);
+      // 找到中奖者
+      const index = players.findIndex(
+        (player) => player.name === roundData.winningAddress
+      );
+      //  计算中奖者前面的玩家的角度
+      const angle = players
+        .slice(0, index)
+        .reduce(
+          (sum, player) => sum + (Number(player.taxe) / narkTaxEthAnout) * 360,
+          0
+        );
+      const maxPlayer = players[index];
       const maxPlayerAngle =
         (Number(maxPlayer.taxe) /
           players.reduce((sum, player) => sum + Number(player.taxe), 0)) *
         360;
-      const startAngle = 90 + maxPlayerAngle / 2;
+
+      const startAngle = 90 + angle + maxPlayerAngle / 2;
       setStartAngle(startAngle);
     }
   }, [players]);
@@ -449,14 +460,27 @@ function DashboardTow() {
                           : "-"}
                       </span>
                     </Tooltip>
-                    <Tooltip content={players[0]?.ethNum}>
+                    <Tooltip
+                      content={parseFloat(
+                        (
+                          Number(roundData.buyTaxEthAmount) +
+                          Number(roundData.sellTaxEthAmount)
+                        ).toFixed(4)
+                      )}
+                    >
                       <span
                         style={{
                           color: "red",
                           fontSize: "16px",
                         }}
                       >
-                        {Number(players[0]?.ethNum).toFixed(2)} ETH{" "}
+                        {parseFloat(
+                          (
+                            Number(roundData.buyTaxEthAmount) +
+                            Number(roundData.sellTaxEthAmount)
+                          ).toFixed(4)
+                        )}{" "}
+                        ETH
                       </span>
                     </Tooltip>
                   </>
@@ -484,19 +508,8 @@ function DashboardTow() {
                           roundNumberRef.current = item;
                           setRoundNumber(roundNumberRef.current as number);
                           const res = await getData(item);
-                          if (res.roundData.winningAddress) {
-                            const winningPlayer = res.newplayers.find(
-                              (player) =>
-                                player.name === res.roundData.winningAddress
-                            );
-                            const newPlayers = res.newplayers.filter(
-                              (player) =>
-                                player.name !== res.roundData.winningAddress
-                            );
-                            setPlayers([winningPlayer, ...newPlayers]);
-                          } else {
-                            setPlayers(res.newplayers);
-                          }
+
+                          setPlayers(res.newplayers);
                           setRoundData(res.roundData);
                           setNarkTaxEthAnout(res.narkTaxEthAnout);
                           setYourEntries(res.yourEntries);
