@@ -340,7 +340,9 @@ function DashboardTow() {
             }}
           >
             <DashboardTowTitle>Current Round</DashboardTowTitle>
-            {isWinning ? <Down src={downImg} /> : null}
+            {isWinning || roundData.winningAddress !== "" ? (
+              <Down src={downImg} />
+            ) : null}
             <DashboardEchart>
               <ReactECharts
                 ref={chartDomRef}
@@ -445,6 +447,16 @@ function DashboardTow() {
                         {roundData.winningAddress
                           ? formatAddress(roundData.winningAddress)
                           : "-"}
+                      </span>
+                    </Tooltip>
+                    <Tooltip content={players[0]?.taxe}>
+                      <span
+                        style={{
+                          color: "red",
+                          fontSize: "16px",
+                        }}
+                      >
+                        {Number(players[0]?.taxe).toFixed(2)} NONO{" "}
                       </span>
                     </Tooltip>
                   </>
