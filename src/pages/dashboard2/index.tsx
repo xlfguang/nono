@@ -174,18 +174,20 @@ function DashboardTow() {
         // 如果有胜利者
         if (res.roundData.winningAddress) {
           clearTimer();
-          setPlayers([...res.newplayers]);
-          previousPlayersRef.current = res.newplayers;
-          setRoundData(res.roundData);
-          setNarkTaxEthAnout(res.narkTaxEthAnout);
-          setYourEntries(res.yourEntries);
-          setYourWinChance(res.yourWinChance);
-          setRank(res.rank);
           handleWinningAnimation();
+          setTimeout(() => {
+            setPlayers([...res.newplayers]);
+            previousPlayersRef.current = res.newplayers;
+            setRoundData(res.roundData);
+            setNarkTaxEthAnout(res.narkTaxEthAnout);
+            setYourEntries(res.yourEntries);
+            setYourWinChance(res.yourWinChance);
+            setRank(res.rank);
+          }, 6000);
           setTimeout(() => {
             initData();
             resetTimer();
-          }, 7000);
+          }, 9000);
         } else {
           // 检查是否有新的玩家加入
           // 检查name 和 taxe 是否相同
