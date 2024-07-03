@@ -1,6 +1,6 @@
 import { ethers, Contract, BigNumber } from 'ethers';
 import abi from "@/abi/lottery.json"
-const nonoContract = '0x6cd0baeeed8edf2df58b0d28655e588648e741b0';
+const nonoContract = '0x89530e48922E8fb744Aa529e1ae055fD41f967Cb';
 
 const rpcs = [
   'https://bsc-dataseed1.ninicoin.io',
