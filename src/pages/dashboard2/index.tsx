@@ -449,14 +449,14 @@ function DashboardTow() {
                           : "-"}
                       </span>
                     </Tooltip>
-                    <Tooltip content={players[0]?.taxe}>
+                    <Tooltip content={players[0]?.ethNum}>
                       <span
                         style={{
                           color: "red",
                           fontSize: "16px",
                         }}
                       >
-                        {Number(players[0]?.taxe).toFixed(2)} NONO{" "}
+                        {Number(players[0]?.ethNum).toFixed(2)} ETH{" "}
                       </span>
                     </Tooltip>
                   </>
