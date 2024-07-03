@@ -70,11 +70,14 @@ export const DashboardTowLabelItem = styled.div<{
     z-index: 1;
   }
 `;
-export const DashboardTowLabelItemHeader = styled.img`
+export const DashboardTowLabelItemChampionr = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  z-index: 2;
 `;
 export const DashboardTowLabelItemContent = styled.div`
   width: calc(100% - 50px);
@@ -122,6 +125,7 @@ export const DashboardEchart = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  /* 旋转 */
 `;
 export const CoinScroll = styled.div`
   overflow: auto;
@@ -214,4 +218,14 @@ export const WinningAddressBox = styled.div`
     width: 60px;
     height: 60px;
   }
+`;
+export const Down = styled.img`
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 100px;
+  z-index: 99;
 `;
