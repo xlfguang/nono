@@ -12,7 +12,7 @@ export default defineConfig({
   define: {
     global: {},
   },
-  base: "/nono/",
+  base: "/",
   // base: "/",
 
   build: {
