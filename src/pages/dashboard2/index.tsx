@@ -27,11 +27,15 @@ import {
   DashboardEchartText,
   WinningAddressBox,
   CoinScroll,
+  DashboardTowLabelItemChampionr,
+  Down,
 } from "./style";
 import ReactECharts from "echarts-for-react"; // or var ReactECharts = require('echarts-for-react');
 import { getRoundAllData, getLatestRoundNumber } from "@/hooks/nonotow";
 import { Spin, Tooltip } from "@douyinfe/semi-ui";
 import { UserContext } from "@/components/userContext";
+import championImg from "@/assets/img/gold-medal.png";
+import downImg from "@/assets/img/down.png";
 // 截取地址的前6位和后4位
 const formatAddress = (address: string) => {
   return address.slice(0, 6) + "..." + address.slice(-4);
@@ -69,6 +73,7 @@ function DashboardTow() {
   const [spinning, setSpinning] = useState(false);
   const [roundData, setRoundData] = useState({} as any);
   const [startAngle, setStartAngle] = useState(90); // 默认90，起始角度，支持范围[0, 360
+  const [isWinning, setIsWinning] = useState(false);
   const getRound = async () => {
     const newroundNumber = await getLatestRoundNumber();
     return newroundNumber;
@@ -138,13 +143,15 @@ function DashboardTow() {
   const handleWinningAnimation = () => {
     // 修改 chartDomRef.current的类名
     if (chartDomRef.current) {
+      setIsWinning(true);
       const dom = chartDomRef.current.getEchartsInstance()._dom;
-      dom.style.transition = "transform 3s";
+      dom.style.transition = "transform 6s";
       dom.style.transform = "rotate(3600deg)";
       setTimeout(() => {
+        setIsWinning(false);
         dom.style.transition = "transform 0s";
         dom.style.transform = "rotate(0deg)";
-      }, 3000);
+      }, 6000);
     }
   };
   // 监听数据变化
@@ -164,21 +171,23 @@ function DashboardTow() {
         if (spinning) {
           return;
         }
-        console.log(res);
         // 如果有胜利者
         if (res.roundData.winningAddress) {
-          const winningPlayer = res.newplayers.find(
-            (player) => player.name === res.roundData.winningAddress
-          );
-          const newPlayers = res.newplayers.filter(
-            (player) => player.name !== res.roundData.winningAddress
-          );
-          setPlayers([winningPlayer, ...newPlayers]);
+          clearTimer();
           handleWinningAnimation();
-
+          setTimeout(() => {
+            setPlayers([...res.newplayers]);
+            previousPlayersRef.current = res.newplayers;
+            setRoundData(res.roundData);
+            setNarkTaxEthAnout(res.narkTaxEthAnout);
+            setYourEntries(res.yourEntries);
+            setYourWinChance(res.yourWinChance);
+            setRank(res.rank);
+          }, 6000);
           setTimeout(() => {
             initData();
-          }, 4000);
+            resetTimer();
+          }, 9000);
         } else {
           // 检查是否有新的玩家加入
           // 检查name 和 taxe 是否相同
@@ -257,6 +266,30 @@ function DashboardTow() {
     };
   }, [address]);
 
+  useEffect(() => {
+    if (roundData.winningAddress) {
+      // 找到中奖者
+      const index = players.findIndex(
+        (player) => player.name === roundData.winningAddress
+      );
+      //  计算中奖者前面的玩家的角度
+      const angle = players
+        .slice(0, index)
+        .reduce(
+          (sum, player) => sum + (Number(player.taxe) / narkTaxEthAnout) * 360,
+          0
+        );
+      const maxPlayer = players[index];
+      const maxPlayerAngle =
+        (Number(maxPlayer.taxe) /
+          players.reduce((sum, player) => sum + Number(player.taxe), 0)) *
+        360;
+
+      const startAngle = 90 + angle + maxPlayerAngle / 2;
+      setStartAngle(startAngle);
+    }
+  }, [players]);
+
   return (
     <Spin size="large" spinning={spinning}>
       <DashboardTowBox>
@@ -279,7 +312,9 @@ function DashboardTow() {
                     key={index}
                     color={player.color}
                   >
-                    {/* <DashboardTowLabelItemHeader src={player.header} /> */}
+                    {roundData.winningAddress === player.name && (
+                      <DashboardTowLabelItemChampionr src={championImg} />
+                    )}
                     <DashboardTowLabelItemContent>
                       <DashboardTowLabelItemData>
                         <Tooltip content={player.name} position="right">
@@ -318,6 +353,9 @@ function DashboardTow() {
             }}
           >
             <DashboardTowTitle>Current Round</DashboardTowTitle>
+            {isWinning || roundData.winningAddress !== "" ? (
+              <Down src={downImg} />
+            ) : null}
             <DashboardEchart>
               <ReactECharts
                 ref={chartDomRef}
@@ -424,6 +462,29 @@ function DashboardTow() {
                           : "-"}
                       </span>
                     </Tooltip>
+                    <Tooltip
+                      content={parseFloat(
+                        (
+                          Number(roundData.buyTaxEthAmount) +
+                          Number(roundData.sellTaxEthAmount)
+                        ).toFixed(4)
+                      )}
+                    >
+                      <span
+                        style={{
+                          color: "red",
+                          fontSize: "16px",
+                        }}
+                      >
+                        {parseFloat(
+                          (
+                            Number(roundData.buyTaxEthAmount) +
+                            Number(roundData.sellTaxEthAmount)
+                          ).toFixed(4)
+                        )}{" "}
+                        ETH
+                      </span>
+                    </Tooltip>
                   </>
                 )}
               </DashboardEchartText>
@@ -444,14 +505,14 @@ function DashboardTow() {
                       active={item === roundNumber}
                       onClick={async () => {
                         clearTimer();
-
                         try {
                           setSpinning(true);
                           roundNumberRef.current = item;
                           setRoundNumber(roundNumberRef.current as number);
                           const res = await getData(item);
-                          setRoundData(res.roundData);
+
                           setPlayers(res.newplayers);
+                          setRoundData(res.roundData);
                           setNarkTaxEthAnout(res.narkTaxEthAnout);
                           setYourEntries(res.yourEntries);
                           setYourWinChance(res.yourWinChance);
