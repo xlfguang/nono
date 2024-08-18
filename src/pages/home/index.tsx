@@ -82,7 +82,7 @@ function index() {
       <div className="info">
         <div>
           <span>Token total supply </span>
-          <span>21,000</span>
+          <span>21,000,000</span>
         </div>
         <div>
           <span>Liquidity </span>
@@ -95,13 +95,13 @@ function index() {
               fontSize: "18PX",
             }}
           >
-            10% (6% pool, 2% arena, 2% marketing)
+            10% (7% poor 3% marketing)
           </span>
         </div>
       </div>
       <div className="Contract">
         <span>Contract</span>
-        <span className="red">0x9C588a8EE95FC137e4C68D3Cf3115766fe423121</span>
+        <span className="red">0xF4C532C076A7B7c3E60D17d517ed8d0d34a8a796</span>
       </div>
       <div className="get-in-touch">
         <div className="content">
