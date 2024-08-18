@@ -15,8 +15,10 @@ const rpcs = [
 const ethRpcs = [
   'https://rpc.ankr.com/eth',
   'https://api.securerpc.com/v1',
-
-
+  'https://eth.llamarpc.com',
+  'https://eth.drpc.org',
+  'https://1rpc.io/eth',
+  'https://eth-mainnet.public.blastapi.io'
 ]
 
 let idx = 0;
