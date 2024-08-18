@@ -2,6 +2,7 @@ import { ethers, Contract, BigNumber } from 'ethers';
 import abi from "@/abi/lottery.json"
 const nonoContract = '0xF4C532C076A7B7c3E60D17d517ed8d0d34a8a796';
 
+// 币安智能链 rpc
 const rpcs = [
   'https://bsc-dataseed1.ninicoin.io',
   'https://bsc-dataseed1.binance.org',
@@ -10,11 +11,19 @@ const rpcs = [
   'https://koge-rpc-bsc.bnb48.club/',
 ];
 
+// eth智能链 rpc
+const ethRpcs = [
+  'https://rpc.ankr.com/eth',
+  'https://api.securerpc.com/v1',
+
+
+]
+
 let idx = 0;
 
 const getProvider = () => {
-  const provider = new ethers.providers.JsonRpcProvider(rpcs[idx]); // 选一个可用的 rpc
-  idx = (idx + 1) % rpcs.length;
+  const provider = new ethers.providers.JsonRpcProvider(ethRpcs[idx]); // 选一个可用的 rpc
+  idx = (idx + 1) % ethRpcs.length;
   return provider;
 };
 

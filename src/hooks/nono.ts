@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-const nonoContract = '0x9C588a8EE95FC137e4C68D3Cf3115766fe423121';
+const nonoContract = '0xF4C532C076A7B7c3E60D17d517ed8d0d34a8a796';
 
 const rpcs = [
     'https://developer-access-mainnet.base.org',
