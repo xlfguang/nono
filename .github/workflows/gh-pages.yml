@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["my-new-branch"] # 添加您的分支名称
+    branches: ["my-new-feature"] # 添加您的分支名称
   workflow_dispatch: # 允许手动触发
 
 jobs:
